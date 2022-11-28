@@ -24,5 +24,6 @@ if [ "$FmtType" = "all" ]; then
 else
   for i in $(git diff --cached --name-only --diff-filter=ACM -- '*.go' | grep -v ".pb.go" | grep -v ".pb.gw.go") ; do
       "$WorkPath"/tools/goimports-reviser-darwin -rm-unused -set-alias -format -file-path "$i"
+      git add "$i"
   done
 fi
