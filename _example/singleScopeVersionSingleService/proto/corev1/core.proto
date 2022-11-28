@@ -1,5 +1,5 @@
 syntax = "proto3";
-option go_package = "./pb/corev1";
+option go_package = "./corev1";
 package proto;
 
 import "credential.proto";

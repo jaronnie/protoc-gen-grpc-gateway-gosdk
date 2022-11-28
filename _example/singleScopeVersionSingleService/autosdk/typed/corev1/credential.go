@@ -6,7 +6,7 @@ import (
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 
-	"github.com/jaronnie/autosdk/pb/pb/corev1"
+	"github.com/jaronnie/autosdk/pb/corev1"
 	"github.com/jaronnie/autosdk/rest"
 )
 

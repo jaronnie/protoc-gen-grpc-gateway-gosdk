@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/jaronnie/autosdk"
-	"github.com/jaronnie/autosdk/pb/pb/corev1"
+	"github.com/jaronnie/autosdk/pb/corev1"
 	"github.com/jaronnie/autosdk/rest"
 )
 
