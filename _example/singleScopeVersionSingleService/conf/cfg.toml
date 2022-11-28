@@ -1,0 +1,2 @@
+goVersion = "1.18"
+goModule = "github.com/jaronnie/autosdk"

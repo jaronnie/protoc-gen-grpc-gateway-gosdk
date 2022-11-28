@@ -1,0 +1,10 @@
+syntax = "proto3";
+option go_package = "./pb/corev1";
+package proto;
+
+message Machine {
+  int32 id = 1;
+  string type = 3;
+}
+
+  

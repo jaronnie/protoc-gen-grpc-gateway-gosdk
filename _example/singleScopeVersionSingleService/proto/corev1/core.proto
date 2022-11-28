@@ -1,0 +1,32 @@
+syntax = "proto3";
+option go_package = "./pb/corev1";
+package proto;
+
+import "credential.proto";
+import "machine.proto";
+import "google/api/annotations.proto";
+
+// Here is the overall greeting service definition where we define all our endpoints
+service corev1 {
+  // Sends a greeting
+  rpc InitCredential (Credential) returns (Credential) {
+    option (google.api.http) = {
+      post: "/api/v1/credential/init"
+      body: "*"
+    };
+  }
+
+  rpc UpdateCredential (Credential) returns (Credential) {
+    option (google.api.http) = {
+      post: "/api/v1/credential/update"
+      body: "*"
+    };
+  }
+
+  rpc InitMachine (Machine) returns (Machine) {
+    option (google.api.http) = {
+      post: "/api/v1/machine/init"
+      body: "*"
+    };
+  }
+}
