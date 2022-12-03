@@ -13,8 +13,8 @@ type Gateway struct {
 	HttpRequestBody  HttpRequestBody
 	HttpResponseBody HttpResponseBody
 
-	IsStreamClient   bool // 是否是 stream client
-	IsStreamServer   bool // 是否是 stream server
+	IsStreamClient   bool // is stream client
+	IsStreamServer   bool // is stream server
 	ProtoServiceName string
 	FuncName         string
 	HttpMethod       string
@@ -25,7 +25,7 @@ type Gateway struct {
 
 type ProtoRequestBody struct {
 	Name         string
-	GoImportPath string // git.hyperchain.cn/bfsdk/pb/corev1
+	GoImportPath string // github.com/autosdk/pb/corev1
 	RootPath     string // corev1
 }
 

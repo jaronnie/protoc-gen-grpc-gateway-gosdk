@@ -10,7 +10,6 @@ func getAllScopeVersionsMap(scopeResourceGws vars.ScopeResourceGateway) map[stri
 	scopeVersionMap := make(map[string]string, 0)
 
 	for k, _ := range scopeResourceGws {
-		// TODO 找到一种能将任意字段串转为驼峰形式的方法
 		scopeVersionMap[string(k)] = utilx.FirstUpper(string(k))
 	}
 	return scopeVersionMap

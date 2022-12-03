@@ -20,7 +20,7 @@ func getMethodGateway(m *protogen.Method, env *PluginEnv) (*vars.Gateway, error)
 		return nil, nil
 	}
 
-	// 获取 grpc gateway 中的 路由
+	// get grpc gateway url
 	options, ok := m.Desc.Options().(*descriptorpb.MethodOptions)
 	if !ok {
 		return nil, nil
@@ -63,13 +63,13 @@ func getMethodGateway(m *protogen.Method, env *PluginEnv) (*vars.Gateway, error)
 	queryParams := createQueryParams(m)
 
 	if env.GatewayPrefix != "" {
-		// 获取 scope
+		// get scope
 		index := strings.LastIndex(env.ScopeVersion, "v")
 		scope := env.ScopeVersion[:index]
 		url = fmt.Sprintf("%s/%s%s", env.GatewayPrefix, scope, url)
 	}
 
-	// 遍历 protoRequestBody 的 fields
+	//  protoRequestBody's fields
 	httpRuleBodyName := httpRule.Body
 	var httpRuleBodyGoName string
 
@@ -81,7 +81,17 @@ func getMethodGateway(m *protogen.Method, env *PluginEnv) (*vars.Gateway, error)
 		}
 	}
 
-	glog.V(1).Infof("rpc method name: [%v], http request method: [%v], url: [%v], http request body [%s], http response body [%s], path params: [%v], query params: [%v], body: [%v]", m.GoName, httpMethod, url, m.Input.GoIdent.GoName, m.Output.GoIdent.GoName, pathParams, queryParams, httpRule.Body)
+	glog.V(1).Infof("rpc method name: [%v], "+
+		"http request method: [%v], "+
+		"url: [%v], "+
+		"http request body [%s], "+
+		"http response body [%s], "+
+		"path params: [%v], "+
+		"query params: [%v], "+
+		"body: [%v]",
+		m.GoName, httpMethod, url, m.Input.GoIdent.GoName,
+		m.Output.GoIdent.GoName, pathParams, queryParams, httpRule.Body)
+
 	return &vars.Gateway{
 		ProtoRequestBody: vars.ProtoRequestBody{
 			Name:         m.Input.GoIdent.GoName,

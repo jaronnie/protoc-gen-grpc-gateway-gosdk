@@ -11,10 +11,10 @@ import (
 type PluginEnv struct {
 	GoVersion          string
 	GoModule           string
-	GatewayPrefix      string   // 微服务下网关统一入口
-	ScopeVersion       string   // 本次生成的 scopeVersion
-	ScopeVersions      []string // 需要生成的所有 scopeVersions
-	IsWarpHttpResponse bool     // 是否封装了 code, data, message
+	GatewayPrefix      string   // microservice gateway prefix
+	ScopeVersion       string   // scopeVersion
+	ScopeVersions      []string // scopeVersions used for clientSet
+	IsWarpHttpResponse bool     // is warped code, data, message
 }
 
 func getPluginEnv() (*PluginEnv, error) {

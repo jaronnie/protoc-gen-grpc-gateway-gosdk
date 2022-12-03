@@ -40,13 +40,13 @@ func TestGenerateResourceFile(t *testing.T) {
 				QueryParams: nil,
 			},
 		},
-		IsBlocface:     true,
-		GoModule:       "github.com/jaronnie/autosdk",
-		GoImportPaths:  []string{"github.com/jaronnie/autosdk/pb/corev1"},
-		ScopeVersion:   "corev1",
-		UpScopeVersion: "Corev1",
-		Resource:       "credential",
-		UpResource:     "Credential",
+		IsWarpHttpResponse: true,
+		GoModule:           "github.com/jaronnie/autosdk",
+		GoImportPaths:      []string{"github.com/jaronnie/autosdk/pb/corev1"},
+		ScopeVersion:       "corev1",
+		UpScopeVersion:     "Corev1",
+		Resource:           "credential",
+		UpResource:         "Credential",
 	}
 	template, err := utilx.ParseTemplate(resourceData, []byte(ResourceTpl))
 	if err != nil {

@@ -5,7 +5,7 @@ import "github.com/jaronnie/protoc-gen-go-httpsdk/internal/vars"
 type ResourceData struct {
 	Gateways []*vars.Gateway
 
-	IsWarpHttpResponse bool     // 是否封装了 code,data,message
+	IsWarpHttpResponse bool     // is warped code,data,message
 	GoModule           string   // github.com/jaronnie/autosdk
 	GoImportPaths      []string // pb import path [github.com/jaronnie/autosdk/pb/corev1]
 	ScopeVersion       string   // corev1
@@ -69,9 +69,9 @@ func new{{.UpResource}}Client(c *{{.UpScopeVersion}}Client) *{{.Resource}}Client
 		Params({{if eq $v.HttpRequestBody.BodyName "*"}}{{else}}{{range $q := $v.QueryParams}}
 			rest.QueryParam{Name: "{{$q.Name}}", Value: param.{{$q.GoName}}},{{end}}{{end}}
 		).
-		Body({{if eq $v.FuncName "Action"}}param.Args{{else if eq $v.HttpRequestBody.BodyName ""}}nil{{else if eq $v.HttpRequestBody.BodyName "*"}}param{{else if ne $v.HttpMethod "GET"}}param.{{$v.HttpRequestBody.GoBodyName}}{{else}}nil{{end}}).
+		Body({{if eq $v.HttpRequestBody.BodyName ""}}nil{{else if eq $v.HttpRequestBody.BodyName "*"}}param{{else if ne $v.HttpMethod "GET"}}param.{{$v.HttpRequestBody.GoBodyName}}{{else}}nil{{end}}).
 		{{if not $v.IsStreamClient}}Do(ctx){{else}}DoUpload(ctx, "file", param.FileName){{end}}.
-		{{if and $.IsWarpHttpResponse (ne $v.HttpResponseBody.Name "Response")}}TransformResponse(resp){{else}}RawResponse(resp){{end}}
+		{{if $.IsWarpHttpResponse}}TransformResponse(){{else}}RawResponse(){{end}}
 
 	if err != nil {
 		return nil, err

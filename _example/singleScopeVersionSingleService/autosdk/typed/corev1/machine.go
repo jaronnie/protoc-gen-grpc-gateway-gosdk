@@ -37,7 +37,7 @@ func (x *machineClient) InitMachine(ctx context.Context, param *corev1.Machine) 
 		Params().
 		Body(param).
 		Do(ctx).
-		RawResponse(resp)
+		RawResponse()
 
 	if err != nil {
 		return nil, err

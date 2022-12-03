@@ -2,8 +2,6 @@ package main
 
 import (
 	"flag"
-	"path/filepath"
-
 	"github.com/golang/glog"
 	"github.com/spf13/viper"
 	"google.golang.org/protobuf/compiler/protogen"
@@ -39,9 +37,7 @@ func (hs *HttpSdk) Generate(plugin *protogen.Plugin) error {
 	glog.V(1).Infof("get protoc go http sdk cmd flag logtostderr: [%v]", flag.CommandLine.Lookup("logtostderr").Value)
 	glog.V(1).Infof("get protoc go http sdk cmd flag env_file: [%v]", flag.CommandLine.Lookup("env_file").Value)
 
-	viper.SetConfigName("cfg")
-	viper.SetConfigType("toml")
-	viper.AddConfigPath(filepath.Dir(EnvFile))
+	viper.SetConfigFile(EnvFile)
 
 	err := viper.ReadInConfig()
 	if err != nil {

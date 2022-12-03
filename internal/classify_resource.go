@@ -12,14 +12,11 @@ import (
 )
 
 func classifyResource(scopeResourceGws vars.ScopeResourceGateway) error {
-	// Rules:
-	//	如果 scope 中只有一个 service, 那么就通过路由对资源进行分类, 路径匹配格式为 /api/v1/credential. 示例的资源对象即为 credential
-	// 	如果已经有多个 service, 那么不进行更改, 以 service 的名称作为资源对象, 并将首字母转为小写
 	for scope, services := range scopeResourceGws {
 		if len(services) == 1 {
 			var serviceName string
-			// 根据路由进行分类
-			// NOTICE: 仅支持分类 /api/{version}/{resource} 的路由
+			// classified by url
+			// NOTICE: regexp by /api/{version}/{resource}
 			for _, gws := range services {
 				serviceGws := make(vars.ServiceGateway, 0)
 				for _, gw := range gws {
@@ -36,8 +33,7 @@ func classifyResource(scopeResourceGws vars.ScopeResourceGateway) error {
 			delete(services, vars.Resource(serviceName))
 
 		} else {
-			// 超过 1 的不用分类
-			// 但是保证 service 的首字母是小写的
+			// if services count more than or equal 1
 			for service, gws := range services {
 				delete(scopeResourceGws[scope], service)
 				scopeResourceGws[scope][vars.Resource(utilx.FirstLower(string(service)))] = gws
@@ -50,7 +46,6 @@ func classifyResource(scopeResourceGws vars.ScopeResourceGateway) error {
 }
 
 func getResourceByUri(uri string) (vars.Resource, error) {
-	// regexp.MustCompile(`\d{1,3}\.\d{1,3}\.?\d{0,5}`)
 	resourceReg := regexp.MustCompile(`/api/v\d{1,3}(.\d+){0,2}/.*`)
 
 	findString := resourceReg.FindString(uri)

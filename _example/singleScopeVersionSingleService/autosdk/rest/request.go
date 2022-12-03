@@ -20,7 +20,6 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
-	"github.com/tidwall/gjson"
 )
 
 // Request allows for building up a request to a server in a chained fashion.
@@ -97,7 +96,7 @@ func (r *Request) wsUrl() (string, error) {
 		return "", errors.New("invalid url, you may not login")
 	}
 
-	// http 协议升级为 websocket 协议
+	// upgrade http to websocket proto
 	if r.c.protocol == "https" {
 		r.c.protocol = "wss"
 	} else {
@@ -144,7 +143,7 @@ type Result struct {
 // processing.
 //
 // Error type:
-//   - http.Client.Do errors are returned directly.
+//  * http.Client.Do errors are returned directly.
 func (r *Request) Do(ctx context.Context) Result {
 	url, err := r.defaultUrl()
 	if err != nil {
@@ -212,7 +211,7 @@ func (r *Request) Do(ctx context.Context) Result {
 // processing.
 //
 // Error type:
-//   - http.Client.Do errors are returned directly.
+//  * http.Client.Do errors are returned directly.
 func (r *Request) DoUpload(ctx context.Context, fieldName, filePath string) Result {
 	url, err := r.defaultUrl()
 	if err != nil {
@@ -403,7 +402,7 @@ func (r *Request) Stream(ctx context.Context) (io.ReadCloser, error) {
 	return rawResp.Body, nil
 }
 
-func (r Result) TransformResponse(ts ...interface{}) ([]byte, error) {
+func (r Result) TransformResponse() ([]byte, error) {
 	if r.err != nil {
 		return nil, r.err
 	}
@@ -429,30 +428,9 @@ func (r Result) TransformResponse(ts ...interface{}) ([]byte, error) {
 	return marshalJSON, nil
 }
 
-func (r Result) RawResponse(ts ...interface{}) ([]byte, error) {
+func (r Result) RawResponse() ([]byte, error) {
 	if r.err != nil {
 		return nil, r.err
-	}
-	if len(ts) != 0 {
-		t := ts[0]
-		of := reflect.TypeOf(t)
-		if of.Name() == "Response" {
-			for i := 0; i < of.NumField(); i++ {
-				if of.Field(i).Name == "Data" && of.Field(i).Type.Name() == "string" {
-					data := gjson.Get(string(r.body), "data")
-					if data.Type == gjson.JSON {
-						j, err := simplejson.NewJson(r.body)
-						if err != nil {
-							return nil, err
-						}
-						dataStr := data.Raw
-						j.Del("data")
-						j.Set("data", dataStr)
-						return j.MarshalJSON()
-					}
-				}
-			}
-		}
 	}
 	return r.body, nil
 }

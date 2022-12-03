@@ -14,21 +14,6 @@ import (
 	"github.com/jaronnie/protoc-gen-go-httpsdk/utilx"
 )
 
-/*
-	区分概念:
-		* scope: 服务, 如 blocface 中的 core
-		* service: 某 scope 中的 service, 如 corev2
-		* method: 某 service 中的 rpc method, 如 corev2 中的 GetMachineList
-		* gateway: 某 service 中的 rpc method 转化的 http gateway 参数信息
-*/
-
-/*
-	Rules:
-		* 如果服务中存在多 service, 就不再对资源进行分类,
-		* 如果是服务中为单 service, 将根据 url 对资源进行分类, 此时 url
-		* 如果是多服务的话, 需要提供一个统一的网管入口的 prefix. 在 blocface 中为 /gateway/scope
-*/
-
 type GenHttpSdk struct {
 	Plugin *protogen.Plugin
 	Env    *PluginEnv
@@ -43,8 +28,8 @@ func Generate(plugin *protogen.Plugin) error {
 	glog.V(1).Infof("get plugin env [%v]", marshalEnv)
 
 	// get scope service gateway
-	scopeResourceGws := make(vars.ScopeResourceGateway, 0) // 每个 scopeVersion 的 service 对应的所有 gateway
-	serviceGws := make(vars.ServiceGateway, 0)             // service 对应的所有 gateway
+	scopeResourceGws := make(vars.ScopeResourceGateway, 0)
+	serviceGws := make(vars.ServiceGateway, 0)
 
 	for _, f := range plugin.Files {
 		if len(f.Services) == 0 {
@@ -112,7 +97,7 @@ func Generate(plugin *protogen.Plugin) error {
 }
 
 func (x *GenHttpSdk) GenGoMod() error {
-	// 初始化 go mod
+	// init go mod
 	var goModFile *protogen.GeneratedFile
 	goModFile = x.Plugin.NewGeneratedFile("go.mod", "")
 	template, err := utilx.ParseTemplate(tpl.GoModData{
@@ -157,7 +142,6 @@ func (x *GenHttpSdk) GenClientSet(scopeResourceGws vars.ScopeResourceGateway) er
 		scopeVersionsMap = getAllScopeVersionsMap(scopeResourceGws)
 	} else {
 		for _, v := range x.Env.ScopeVersions {
-			// TODO 找到一种能将任意字段串转为驼峰形式的方法
 			scopeVersionsMap[v] = utilx.FirstUpper(v)
 		}
 	}
@@ -225,8 +209,6 @@ func (x *GenHttpSdk) GenResource(scopeResourceGws vars.ScopeResourceGateway) err
 		for resource, gws := range resources {
 			var scopeResourceFile *protogen.GeneratedFile
 			var goImportPaths []string
-			// 存在重复引入包的问题
-			// 在模板中难以解决
 			for _, gw := range gws {
 				goImportPaths = append(goImportPaths, gw.ProtoRequestBody.GoImportPath, gw.HttpResponseBody.GoImportPath)
 			}

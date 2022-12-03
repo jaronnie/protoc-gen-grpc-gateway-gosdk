@@ -38,7 +38,7 @@ func (x *credentialClient) InitCredential(ctx context.Context, param *corev1.Cre
 		Params().
 		Body(param).
 		Do(ctx).
-		RawResponse(resp)
+		RawResponse()
 
 	if err != nil {
 		return nil, err
@@ -61,7 +61,7 @@ func (x *credentialClient) UpdateCredential(ctx context.Context, param *corev1.C
 		Params().
 		Body(param).
 		Do(ctx).
-		RawResponse(resp)
+		RawResponse()
 
 	if err != nil {
 		return nil, err
