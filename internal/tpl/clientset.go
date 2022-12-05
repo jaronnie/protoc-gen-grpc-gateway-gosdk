@@ -18,6 +18,13 @@ import (
 	{{end}}
 )
 
+type Interface interface {
+	Direct() typed.DirectInterface
+	
+	{{range $k, $v := .ScopeVersions}}{{$v}}() {{$k}}.{{$v}}Interface
+	{{end}}
+}
+
 type Clientset struct {
 	// direct client to request
 	direct *typed.DirectClient
