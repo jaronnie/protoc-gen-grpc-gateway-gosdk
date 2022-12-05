@@ -237,7 +237,7 @@ func (x *GenHttpSdk) GenScopeClient(scopeResourceGws vars.ScopeResourceGateway) 
 	// gen fake scope client file
 	for k, v := range scopeVersionsMap {
 		var fakeScopeClientFile *protogen.GeneratedFile
-		fakeScopeClientFile = x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/fake/fake%s_client.go",
+		fakeScopeClientFile = x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/fake/fake_%s_client.go",
 			k, k), "")
 		template, err = utilx.ParseTemplate(typedfake.FakeScopeClientData{
 			ScopeVersion:   k,
