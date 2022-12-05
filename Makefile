@@ -4,4 +4,4 @@ build:
 
 .PHONY: fmt.all
 fmt.all:
-	@sh script/goimports.sh all
+	@sh scripts/goimports.sh all

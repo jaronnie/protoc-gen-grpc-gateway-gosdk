@@ -1,8 +1,9 @@
 package internal
 
 import (
-	"github.com/jaronnie/protoc-gen-go-httpsdk/utilx"
 	"github.com/spf13/viper"
+
+	"github.com/jaronnie/protoc-gen-go-httpsdk/utilx"
 )
 
 type PluginEnv struct {

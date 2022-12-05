@@ -1,6 +1,6 @@
 package utilx
 
-import "github.com/go-playground/validator/v10"
+import validator "github.com/go-playground/validator/v10"
 
 func ValidateStruct(s interface{}) error {
 	validate := validator.New()
