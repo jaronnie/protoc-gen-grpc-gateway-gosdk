@@ -8,8 +8,10 @@ import (
 	"google.golang.org/protobuf/compiler/protogen"
 
 	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/tpl"
+	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/tpl/fake"
 	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/tpl/rest"
 	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/tpl/typed"
+	typedfake "github.com/jaronnie/protoc-gen-go-httpsdk/internal/tpl/typed/fake"
 	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/vars"
 	"github.com/jaronnie/protoc-gen-go-httpsdk/utilx"
 )
@@ -146,6 +148,7 @@ func (x *GenHttpSdk) GenClientSet(scopeResourceGws vars.ScopeResourceGateway) er
 		}
 	}
 
+	// gen clientset
 	var clientSetFile *protogen.GeneratedFile
 	clientSetFile = x.Plugin.NewGeneratedFile("clientset.go", "")
 	template, err := utilx.ParseTemplate(tpl.ClientSetData{
@@ -158,6 +161,21 @@ func (x *GenHttpSdk) GenClientSet(scopeResourceGws vars.ScopeResourceGateway) er
 		return err
 	}
 	if _, err := clientSetFile.Write(template); err != nil {
+		return err
+	}
+
+	// gen fake clientset
+	var fakeClientSetFile *protogen.GeneratedFile
+	fakeClientSetFile = x.Plugin.NewGeneratedFile("fake/fake_clientset.go", "")
+	template, err = utilx.ParseTemplate(fake.FakeClientSetData{
+		GoModule:      x.Env.GoModule,
+		ScopeVersions: scopeVersionsMap,
+	}, []byte(fake.FakeClientSetTpl))
+	if err != nil {
+		glog.Errorf("generate clientset meet error. Err: [%v]", err)
+		return err
+	}
+	if _, err := fakeClientSetFile.Write(template); err != nil {
 		return err
 	}
 	return nil
@@ -181,7 +199,21 @@ func (x *GenHttpSdk) GenScopeClient(scopeResourceGws vars.ScopeResourceGateway) 
 		return err
 	}
 
-	// gen resource client file
+	// gen fake direct client file
+	var fakeDirectClientFile *protogen.GeneratedFile
+	fakeDirectClientFile = x.Plugin.NewGeneratedFile("typed/fake/fake_direct_client.go", "")
+	template, err = utilx.ParseTemplate(typed.DirectClientData{
+		GoModule: x.Env.GoModule,
+	}, []byte(typedfake.FakeDirectClientTpl))
+	if err != nil {
+		glog.Errorf("generate fake direct_client meet error. Err: [%v]", err)
+		return err
+	}
+	if _, err = fakeDirectClientFile.Write(template); err != nil {
+		return err
+	}
+
+	// gen scope client file
 	for k, v := range scopeVersionsMap {
 		var scopeClientFile *protogen.GeneratedFile
 		scopeClientFile = x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/%s_client.go",
@@ -201,10 +233,32 @@ func (x *GenHttpSdk) GenScopeClient(scopeResourceGws vars.ScopeResourceGateway) 
 		}
 
 	}
+
+	// gen fake scope client file
+	for k, v := range scopeVersionsMap {
+		var fakeScopeClientFile *protogen.GeneratedFile
+		fakeScopeClientFile = x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/fake/fake%s_client.go",
+			k, k), "")
+		template, err = utilx.ParseTemplate(typedfake.FakeScopeClientData{
+			ScopeVersion:   k,
+			UpScopeVersion: v,
+			GoModule:       x.Env.GoModule,
+			UpResources:    resources,
+		}, []byte(typedfake.FakeScopeClientTpl))
+		if err != nil {
+			glog.Errorf("generate fake_scope_client meet error. Err: [%v]", err)
+			return err
+		}
+		if _, err = fakeScopeClientFile.Write(template); err != nil {
+			return err
+		}
+
+	}
 	return nil
 }
 
 func (x *GenHttpSdk) GenResource(scopeResourceGws vars.ScopeResourceGateway) error {
+	// gen scope resource
 	for scope, resources := range scopeResourceGws {
 		for resource, gws := range resources {
 			var scopeResourceFile *protogen.GeneratedFile
@@ -230,6 +284,38 @@ func (x *GenHttpSdk) GenResource(scopeResourceGws vars.ScopeResourceGateway) err
 				return err
 			}
 			if _, err := scopeResourceFile.Write(template); err != nil {
+				return err
+			}
+
+		}
+	}
+
+	// gen fake scope resource
+	for scope, resources := range scopeResourceGws {
+		for resource, gws := range resources {
+			var fakeScopeResourceFile *protogen.GeneratedFile
+			var goImportPaths []string
+			for _, gw := range gws {
+				goImportPaths = append(goImportPaths, gw.ProtoRequestBody.GoImportPath, gw.HttpResponseBody.GoImportPath)
+			}
+			// remove duplicate
+			goImportPaths = utilx.RemoveDuplicateElement(goImportPaths)
+			fakeScopeResourceFile = x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/fake/fake_%s.go", scope, resource), "")
+			template, err := utilx.ParseTemplate(typedfake.FakeResourceData{
+				Gateways:           gws,
+				IsWarpHttpResponse: x.Env.IsWarpHttpResponse,
+				GoModule:           x.Env.GoModule,
+				GoImportPaths:      goImportPaths,
+				ScopeVersion:       string(scope),
+				UpScopeVersion:     utilx.FirstUpper(string(scope)),
+				Resource:           string(resource),
+				UpResource:         utilx.FirstUpper(string(resource)),
+			}, []byte(typedfake.FakeResourceTpl))
+			if err != nil {
+				glog.Errorf("generate fake resource meet error. Err: [%v]", err)
+				return err
+			}
+			if _, err := fakeScopeResourceFile.Write(template); err != nil {
 				return err
 			}
 
