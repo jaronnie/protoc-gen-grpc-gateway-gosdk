@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/golang/glog"
+	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"google.golang.org/protobuf/compiler/protogen"
 
@@ -41,6 +42,12 @@ func (hs *HttpSdk) Generate(plugin *protogen.Plugin) error {
 
 	err := viper.ReadInConfig()
 	if err != nil {
+		return err
+	}
+
+	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
+	pflag.Parse()
+	if err = viper.BindPFlags(pflag.CommandLine); err != nil {
 		return err
 	}
 
