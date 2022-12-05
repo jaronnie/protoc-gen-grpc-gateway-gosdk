@@ -9,11 +9,11 @@ import (
 )
 
 func TestInitMachine(t *testing.T) {
-	fakeMachine.Machines = &corev1.Machine{
-		Id:   2,
-		Type: "colocation",
-	}
 	t.Run("test init machine", func(t *testing.T) {
+		fakeMachine.FakeReturnInitMachine = &corev1.Machine{
+			Id:   2,
+			Type: "colocation",
+		}
 		fakeClient := &fake.Clientset{}
 		machine, err := InitMachine(fakeClient)
 		if err != nil {
