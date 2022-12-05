@@ -9,20 +9,10 @@ import (
 	"github.com/jaronnie/autosdk/rest"
 )
 
-var ClientSet autosdk.Interface
-
 func main() {
-	machine, err := ClientSet.Corev1().Machine().InitMachine(context.Background(), &corev1.Machine{})
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Println(machine)
-}
-
-func init() {
+	var clientSet autosdk.Interface
 	var err error
-	ClientSet, err = autosdk.NewClientWithOptions(
+	clientSet, err = autosdk.NewClientWithOptions(
 		rest.WithProtocol("http"),
 		rest.WithAddr("127.0.0.1"),
 		rest.WithPort("8090"),
@@ -32,4 +22,15 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+
+	machine, err := InitMachine(clientSet)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(machine)
+}
+
+func InitMachine(clientSet autosdk.Interface) (*corev1.Machine, error) {
+	return clientSet.Corev1().Machine().InitMachine(context.Background(), &corev1.Machine{})
 }
