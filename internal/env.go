@@ -9,7 +9,7 @@ type PluginEnv struct {
 	GoVersion          string   `validate:"required"`
 	GoModule           string   `validate:"required"`
 	ScopeVersion       string   `validate:"required"` // scopeVersion
-	ScopeVersions      []string `validate:"required"` // scopeVersions used for clientSet
+	ScopeVersions      []string // scopeVersions used for clientSet
 	GatewayPrefix      string   // microservice gateway prefix
 	IsWarpHttpResponse bool     // is warped code, data, message
 }
