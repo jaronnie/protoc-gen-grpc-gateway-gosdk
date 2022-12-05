@@ -9,7 +9,7 @@ import (
 	"github.com/jaronnie/autosdk/rest"
 )
 
-var ClientSet *autosdk.Clientset
+var ClientSet autosdk.Interface
 
 func main() {
 	machine, err := ClientSet.Corev1().Machine().InitMachine(context.Background(), &corev1.Machine{})

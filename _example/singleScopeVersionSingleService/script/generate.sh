@@ -16,6 +16,7 @@ function generateFunc() {
           fi
       fi
     done
+    sleep 1
     cd autosdk; go mod tidy; cd ..
 }
 

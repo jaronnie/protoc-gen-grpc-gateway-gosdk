@@ -7,6 +7,12 @@ import (
 	corev1 "github.com/jaronnie/autosdk/typed/corev1"
 )
 
+type Interface interface {
+	Direct() typed.DirectInterface
+
+	Corev1() corev1.Corev1Interface
+}
+
 type Clientset struct {
 	// direct client to request
 	direct *typed.DirectClient
