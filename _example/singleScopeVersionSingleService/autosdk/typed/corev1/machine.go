@@ -16,6 +16,8 @@ type MachineGetter interface {
 
 type MachineInterface interface {
 	InitMachine(ctx context.Context, param *corev1.Machine) (*corev1.Machine, error)
+
+	MachineExpansion
 }
 
 type machineClient struct {

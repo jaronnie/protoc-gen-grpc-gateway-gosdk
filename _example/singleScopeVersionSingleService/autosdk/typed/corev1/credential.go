@@ -17,6 +17,8 @@ type CredentialGetter interface {
 type CredentialInterface interface {
 	InitCredential(ctx context.Context, param *corev1.Credential) (*corev1.Credential, error)
 	UpdateCredential(ctx context.Context, param *corev1.Credential) (*corev1.Credential, error)
+
+	CredentialExpansion
 }
 
 type credentialClient struct {
