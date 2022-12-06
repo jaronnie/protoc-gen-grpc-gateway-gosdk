@@ -34,7 +34,7 @@ func (x *machineClient) InitMachine(ctx context.Context, param *corev1.Machine) 
 	var resp corev1.Machine
 	response, err := x.client.Verb("POST").
 		SubPath(
-			"/api/v1/machine/init",
+			"/gateway/core/api/v1/machine/init",
 		).
 		Params().
 		Body(param).

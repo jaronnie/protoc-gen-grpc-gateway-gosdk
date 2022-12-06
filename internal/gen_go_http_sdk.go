@@ -291,22 +291,24 @@ func (x *GenHttpSdk) GenResource(scopeResourceGws vars.ScopeResourceGateway) err
 	}
 
 	// gen scope expansion resource
-	for scope, resources := range scopeResourceGws {
-		for resource, _ := range resources {
-			var scopeResourceExpansionFile *protogen.GeneratedFile
-			scopeResourceExpansionFile = x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/%s_expansion.go", scope, resource), "")
-			template, err := utilx.ParseTemplate(typed.ResourceExpansionData{
-				ScopeVersion: string(scope),
-				UpResource:   utilx.FirstUpper(string(resource)),
-			}, []byte(typed.ResourceExpansionTpl))
-			if err != nil {
-				glog.Errorf("generate resource expansion meet error. Err: [%v]", err)
-				return err
-			}
-			if _, err := scopeResourceExpansionFile.Write(template); err != nil {
-				return err
-			}
+	if x.Env.IsResourceExpansionCreateOrUpdate {
+		for scope, resources := range scopeResourceGws {
+			for resource, _ := range resources {
+				var scopeResourceExpansionFile *protogen.GeneratedFile
+				scopeResourceExpansionFile = x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/%s_expansion.go", scope, resource), "")
+				template, err := utilx.ParseTemplate(typed.ResourceExpansionData{
+					ScopeVersion: string(scope),
+					UpResource:   utilx.FirstUpper(string(resource)),
+				}, []byte(typed.ResourceExpansionTpl))
+				if err != nil {
+					glog.Errorf("generate resource expansion meet error. Err: [%v]", err)
+					return err
+				}
+				if _, err := scopeResourceExpansionFile.Write(template); err != nil {
+					return err
+				}
 
+			}
 		}
 	}
 
