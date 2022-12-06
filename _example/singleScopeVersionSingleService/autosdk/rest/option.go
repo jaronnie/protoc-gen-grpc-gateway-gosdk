@@ -13,7 +13,7 @@ func WithClient(client *http.Client) Opt {
 	}
 }
 
-func WithHeaders(headers map[string][]string) Opt {
+func WithHeaders(headers http.Header) Opt {
 	return func(c *RESTClient) error {
 		c.headers = headers
 		return nil

@@ -14,8 +14,6 @@ type Interface interface {
 	Verb(verb string) *Request
 	Post() *Request
 	Get() *Request
-
-	GetToken() string
 }
 
 type Opt func(client *RESTClient) error
@@ -44,17 +42,6 @@ func (r *RESTClient) Post() *Request {
 
 func (r *RESTClient) Get() *Request {
 	return r.Verb("GET")
-}
-
-func (r *RESTClient) GetToken() string {
-	if r.headers != nil {
-		cookie := r.headers.Get("Cookie")
-		split := strings.Split(cookie, "=")
-		if len(split) >= 1 {
-			return split[1]
-		}
-	}
-	return ""
 }
 
 func RESTClientFor(config *RESTClient) (*RESTClient, error) {
