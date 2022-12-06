@@ -35,7 +35,7 @@ func (x *credentialClient) InitCredential(ctx context.Context, param *corev1.Cre
 	var resp corev1.Credential
 	response, err := x.client.Verb("POST").
 		SubPath(
-			"/api/v1/credential/init",
+			"/gateway/core/api/v1/credential/init",
 		).
 		Params().
 		Body(param).
@@ -58,7 +58,7 @@ func (x *credentialClient) UpdateCredential(ctx context.Context, param *corev1.C
 	var resp corev1.Credential
 	response, err := x.client.Verb("POST").
 		SubPath(
-			"/api/v1/credential/update",
+			"/gateway/core/api/v1/credential/update",
 		).
 		Params().
 		Body(param).
