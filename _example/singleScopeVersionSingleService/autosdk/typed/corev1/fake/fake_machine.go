@@ -23,6 +23,6 @@ type FakeMachine struct {
 	Fake *FakeCorev1
 }
 
-func (x *FakeMachine) InitMachine(ctx context.Context, param *corev1.Machine) (*corev1.Machine, error) {
+func (f *FakeMachine) InitMachine(ctx context.Context, param *corev1.Machine) (*corev1.Machine, error) {
 	return FakeReturnInitMachine, nil
 }
