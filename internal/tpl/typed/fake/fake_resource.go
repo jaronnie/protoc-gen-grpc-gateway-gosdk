@@ -21,12 +21,14 @@ package fake
 import (
 	"context"
 
+	{{range $k, $v := .Gateways}}{{if $v.IsStreamServer}}"{{$.GoModule}}/rest"{{break}}{{end}}{{end}}
+
 	{{range $v := .GoImportPaths}}"{{$v}}"
 	{{end}}
 )
 
 var (
-	{{range $k, $v := .Gateways}}FakeReturn{{$v.FuncName}} = &{{if $v.IsStreamServer}}rest.Request{{else}}{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{}{{end}}
+	{{range $k, $v := .Gateways}}FakeReturn{{$v.FuncName}} = &{{if $v.IsStreamServer}}rest.Request{}{{else}}{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{}{{end}}
 	{{end}}
 )
 
