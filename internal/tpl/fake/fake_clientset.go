@@ -20,11 +20,11 @@ import (
 
 type Clientset struct {}
 
-func (x *Clientset) Direct() typed.DirectInterface {
+func (f *Clientset) Direct() typed.DirectInterface {
 	return &fake.FakeDirect{}
 }
 
-{{range $k, $v := .ScopeVersions}}func (x *Clientset) {{$v}}() {{$k}}.{{$v}}Interface {
+{{range $k, $v := .ScopeVersions}}func (f *Clientset) {{$v}}() {{$k}}.{{$v}}Interface {
 	return &fake{{$k}}.Fake{{$v}}{}
 }
 

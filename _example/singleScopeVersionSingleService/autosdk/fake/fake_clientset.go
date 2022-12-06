@@ -10,10 +10,10 @@ import (
 
 type Clientset struct{}
 
-func (x *Clientset) Direct() typed.DirectInterface {
+func (f *Clientset) Direct() typed.DirectInterface {
 	return &fake.FakeDirect{}
 }
 
-func (x *Clientset) Corev1() corev1.Corev1Interface {
+func (f *Clientset) Corev1() corev1.Corev1Interface {
 	return &fakecorev1.FakeCorev1{}
 }

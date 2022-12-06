@@ -25,10 +25,10 @@ type FakeCredential struct {
 	Fake *FakeCorev1
 }
 
-func (x *FakeCredential) InitCredential(ctx context.Context, param *corev1.Credential) (*corev1.Credential, error) {
+func (f *FakeCredential) InitCredential(ctx context.Context, param *corev1.Credential) (*corev1.Credential, error) {
 	return FakeReturnInitCredential, nil
 }
 
-func (x *FakeCredential) UpdateCredential(ctx context.Context, param *corev1.Credential) (*corev1.Credential, error) {
+func (f *FakeCredential) UpdateCredential(ctx context.Context, param *corev1.Credential) (*corev1.Credential, error) {
 	return FakeReturnUpdateCredential, nil
 }
