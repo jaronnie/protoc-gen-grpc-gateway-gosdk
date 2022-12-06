@@ -36,6 +36,8 @@ type {{.UpResource}}Getter interface {
 type {{.UpResource}}Interface interface {
 	{{range $k, $v := .Gateways}}{{$v.FuncName}}({{if $v.IsStreamServer}}{{else}}ctx context.Context,{{end}} param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if $v.IsStreamServer}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error)
 	{{end}}
+
+	{{.UpResource}}Expansion
 }
 
 type {{.Resource}}Client struct {
