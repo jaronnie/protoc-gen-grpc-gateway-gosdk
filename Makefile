@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	@go install
+	@go install ./cmd/protoc-gen-go-httpsdk
 
 .PHONY: fmt.all
 fmt.all:

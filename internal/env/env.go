@@ -1,4 +1,4 @@
-package internal
+package env
 
 import (
 	"github.com/spf13/viper"
@@ -16,7 +16,7 @@ type PluginEnv struct {
 	IsResourceExpansionCreateOrUpdate bool     // is to create or update resource expansion
 }
 
-func getPluginEnv() (*PluginEnv, error) {
+func GetPluginEnv() (*PluginEnv, error) {
 	var c PluginEnv
 
 	if err := viper.Unmarshal(&c); err != nil {

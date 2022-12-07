@@ -1,4 +1,4 @@
-package internal
+package gateway
 
 import (
 	"regexp"
@@ -11,7 +11,7 @@ import (
 	"github.com/jaronnie/protoc-gen-go-httpsdk/utilx"
 )
 
-func classifyResource(scopeResourceGws vars.ScopeResourceGateway) error {
+func ClassifyResource(scopeResourceGws vars.ScopeResourceGateway) error {
 	for scope, services := range scopeResourceGws {
 		if len(services) == 1 {
 			var serviceName string
@@ -56,7 +56,7 @@ func getResourceByUri(uri string) (vars.Resource, error) {
 	return vars.Resource(split[3]), nil
 }
 
-func getAllUpResources(scopeResourceGws vars.ScopeResourceGateway) []string {
+func GetAllUpResources(scopeResourceGws vars.ScopeResourceGateway) []string {
 	var resources []string
 	for _, resourceMap := range scopeResourceGws {
 		for resource, _ := range resourceMap {

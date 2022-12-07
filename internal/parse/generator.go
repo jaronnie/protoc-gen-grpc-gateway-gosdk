@@ -1,4 +1,4 @@
-package internal
+package parse
 
 import (
 	"fmt"
@@ -20,7 +20,7 @@ func toCamelCase(str string) string {
 	})
 }
 
-func parsePathParam(pattern string) ([]*vars.PathParam, error) {
+func ParsePathParam(pattern string) ([]*vars.PathParam, error) {
 	if !strings.HasPrefix(pattern, "/") {
 		return nil, fmt.Errorf("no leading /")
 	}
@@ -55,7 +55,7 @@ func parsePathParam(pattern string) ([]*vars.PathParam, error) {
 	return params, nil
 }
 
-func createQueryParams(method *protogen.Method) []*vars.QueryParam {
+func CreateQueryParams(method *protogen.Method) []*vars.QueryParam {
 	queryParams := make([]*vars.QueryParam, 0)
 
 	var f func(parent *vars.QueryParam, fields []*protogen.Field)

@@ -1,6 +1,6 @@
 // Refer: https://github.com/grpc-ecosystem/grpc-gateway
 
-package internal
+package parse
 
 import (
 	"fmt"
