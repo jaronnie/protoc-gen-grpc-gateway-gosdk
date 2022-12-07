@@ -21,7 +21,7 @@ package {{.ScopeVersion}}
 import (
 	"context"
 
-	{{range $v := .GoImportPaths}}"{{$v}}"
+	{{range $v := .GoImportPaths | uniq}}"{{$v}}"
 	{{end}}
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"

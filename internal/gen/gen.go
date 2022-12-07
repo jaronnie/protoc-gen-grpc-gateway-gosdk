@@ -191,8 +191,6 @@ func (x *GenHttpSdk) GenResource(scopeResourceGws vars.ScopeResourceGateway) err
 			for _, gw := range gws {
 				goImportPaths = append(goImportPaths, gw.ProtoRequestBody.GoImportPath, gw.HttpResponseBody.GoImportPath)
 			}
-			// remove duplicate
-			goImportPaths = utilx.RemoveDuplicateElement(goImportPaths)
 			scopeResourceFile = x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/%s.go", scope, resource), "")
 			template, err := utilx.ParseTemplate(typed.ResourceData{
 				Gateways:           gws,
