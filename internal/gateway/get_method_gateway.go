@@ -1,7 +1,9 @@
-package internal
+package gateway
 
 import (
 	"fmt"
+	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/env"
+	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/parse"
 	"path/filepath"
 	"strings"
 
@@ -14,7 +16,7 @@ import (
 	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/vars"
 )
 
-func getMethodGateway(m *protogen.Method, env *PluginEnv) (*vars.Gateway, error) {
+func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, error) {
 
 	if m.Desc.IsStreamingClient() && m.Desc.IsStreamingServer() {
 		return nil, nil
@@ -55,12 +57,12 @@ func getMethodGateway(m *protogen.Method, env *PluginEnv) (*vars.Gateway, error)
 		return nil, nil
 	}
 
-	pathParams, err := parsePathParam(url)
+	pathParams, err := parse.ParsePathParam(url)
 	if err != nil {
 		return nil, nil
 	}
 
-	queryParams := createQueryParams(m)
+	queryParams := parse.CreateQueryParams(m)
 
 	if env.GatewayPrefix != "" {
 		// get scope

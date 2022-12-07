@@ -9,7 +9,7 @@ to generate go http sdk similar to k8s.
 ```shell
 git clone https://github.com/jaronnie/protoc-gen-go-httpsdk.git
 cd protoc-gen-go-httpsdk
-go install
+make build
 ```
 
 ## _example

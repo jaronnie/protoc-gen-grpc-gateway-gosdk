@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-
 	"github.com/golang/glog"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
@@ -14,6 +13,10 @@ import (
 var (
 	EnvFile      string
 	ScopeVersion string
+)
+
+var (
+	Version string
 )
 
 type HttpSdk struct{}
@@ -38,6 +41,8 @@ func main() {
 func (hs *HttpSdk) Generate(plugin *protogen.Plugin) error {
 	glog.V(1).Infof("get protoc go http sdk cmd flag logtostderr: [%v]", flag.CommandLine.Lookup("logtostderr").Value)
 	glog.V(1).Infof("get protoc go http sdk cmd flag env_file: [%v]", flag.CommandLine.Lookup("env_file").Value)
+
+	glog.V(1).Infof("get protoc go http sdk version: [%v]", Version)
 
 	viper.SetConfigFile(EnvFile)
 
