@@ -6,7 +6,6 @@ package rest
 
 import (
 	"net/http"
-	"strings"
 	"time"
 )
 
