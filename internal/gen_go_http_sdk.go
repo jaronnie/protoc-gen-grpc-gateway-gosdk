@@ -59,11 +59,13 @@ func Generate(plugin *protogen.Plugin) error {
 
 	ghs := gen.GenHttpSdk{Plugin: plugin, Env: pluginEnv}
 
-	// generate sdk go mod file
-	if err = ghs.GenGoMod(); err != nil {
-		return err
+	if pluginEnv.IsNeedGenerateGoMod() {
+		// generate sdk go mod file
+		if err = ghs.GenGoMod(); err != nil {
+			return err
+		}
+		glog.V(1).Infof("generate go mod successfully")
 	}
-	glog.V(1).Infof("generate go mod successfully")
 
 	// generate sdk rest frame
 	if err = ghs.GenRestFrame(); err != nil {
