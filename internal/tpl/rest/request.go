@@ -20,7 +20,6 @@ import (
 	"time"
 
 	simplejson "github.com/bitly/go-simplejson"
-	"github.com/tidwall/gjson"
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
