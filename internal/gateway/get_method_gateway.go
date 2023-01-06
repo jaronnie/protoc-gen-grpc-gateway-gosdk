@@ -2,8 +2,6 @@ package gateway
 
 import (
 	"fmt"
-	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/env"
-	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/parse"
 	"path/filepath"
 	"strings"
 
@@ -13,6 +11,8 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"
 
+	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/env"
+	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/parse"
 	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/vars"
 )
 

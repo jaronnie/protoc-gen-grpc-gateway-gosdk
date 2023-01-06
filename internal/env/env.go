@@ -2,10 +2,10 @@ package env
 
 import (
 	"encoding/json"
-	"flag"
 	"os"
 
 	"github.com/pkg/errors"
+	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 
 	"github.com/jaronnie/protoc-gen-go-httpsdk/utilx"
@@ -37,8 +37,8 @@ func GetPluginEnv() (*PluginEnv, error) {
 		return nil, err
 	}
 
-	if flag.CommandLine.Lookup("scopeVersion").Value.String() != "" {
-		c.ScopeVersion = flag.CommandLine.Lookup("scopeVersion").Value.String()
+	if pflag.CommandLine.Lookup("scopeVersion").Value.String() != "" {
+		c.ScopeVersion = pflag.CommandLine.Lookup("scopeVersion").Value.String()
 	}
 
 	if c.GoVersion == "" && c.GoModule == "" {

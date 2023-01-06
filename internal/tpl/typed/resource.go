@@ -5,13 +5,14 @@ import "github.com/jaronnie/protoc-gen-go-httpsdk/internal/vars"
 type ResourceData struct {
 	Gateways []*vars.Gateway
 
-	IsWarpHttpResponse bool     // is warped code,data,message
-	GoModule           string   // github.com/jaronnie/autosdk
-	GoImportPaths      []string // pb import path [github.com/jaronnie/autosdk/pb/corev1]
-	ScopeVersion       string   // corev1
-	UpScopeVersion     string   // Corev1
-	Resource           string   // credential
-	UpResource         string   // Credential
+	IsWarpHttpResponse                bool     // is warped code,data,message
+	IsResourceExpansionCreateOrUpdate bool     // is to create or update resource expansion
+	GoModule                          string   // github.com/jaronnie/autosdk
+	GoImportPaths                     []string // pb import path [github.com/jaronnie/autosdk/pb/corev1]
+	ScopeVersion                      string   // corev1
+	UpScopeVersion                    string   // Corev1
+	Resource                          string   // credential
+	UpResource                        string   // Credential
 }
 
 var ResourceTpl = `
@@ -34,10 +35,9 @@ type {{.UpResource}}Getter interface {
 }
 
 type {{.UpResource}}Interface interface {
-	{{range $k, $v := .Gateways}}{{$v.FuncName}}({{if $v.IsStreamServer}}{{else}}ctx context.Context,{{end}} param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if $v.IsStreamServer}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error)
+	{{range $k, $v := .Gateways}}{{$v.FuncName}}({{if or $v.IsStreamServer $v.IsStreamClient}}{{else}}ctx context.Context,{{end}} param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if or $v.IsStreamServer $v.IsStreamClient}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error)
 	{{end}}
-
-	{{.UpResource}}Expansion
+	{{if .IsResourceExpansionCreateOrUpdate}}{{.UpResource}}Expansion{{end}}
 }
 
 type {{.Resource}}Client struct {
@@ -50,8 +50,8 @@ func new{{.UpResource}}Client(c *{{.UpScopeVersion}}Client) *{{.Resource}}Client
 	}
 }
 
-{{range $k, $v := .Gateways}}func (x *{{$.Resource}}Client) {{$v.FuncName}}({{if $v.IsStreamServer}}{{else}}ctx context.Context,{{end}}param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if $v.IsStreamServer}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error) {
-	{{if $v.IsStreamServer}}request := x.client.Verb("{{$v.HttpMethod}}").
+{{range $k, $v := .Gateways}}func (x *{{$.Resource}}Client) {{$v.FuncName}}({{if or $v.IsStreamServer $v.IsStreamClient}}{{else}}ctx context.Context,{{end}}param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if or $v.IsStreamServer $v.IsStreamClient}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error) {
+	{{if or $v.IsStreamServer $v.IsStreamClient}}request := x.client.Verb("{{$v.HttpMethod}}").
 		SubPath(
 			"{{$v.Url}}",{{range $p := $v.PathParams}}
 			rest.PathParam{Name: "{{$p.Name}}", Value: param.{{$p.GoName}}},{{end}}
@@ -61,8 +61,7 @@ func new{{.UpResource}}Client(c *{{.UpScopeVersion}}Client) *{{.Resource}}Client
 		).
 		Body({{if eq $v.HttpRequestBody.BodyName ""}}nil{{else if eq $v.HttpRequestBody.BodyName "*"}}param{{else if ne $v.HttpMethod "GET"}}param.{{$v.HttpRequestBody.GoBodyName}}{{else}}nil{{end}})
 
-	return request, nil
-	{{else}}var resp {{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}
+	return request, nil{{else}}var resp {{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}
 		response, err := x.client.Verb("{{$v.HttpMethod}}").
 		SubPath(
 			"{{$v.Url}}",{{range $p := $v.PathParams}}
@@ -72,7 +71,7 @@ func new{{.UpResource}}Client(c *{{.UpScopeVersion}}Client) *{{.Resource}}Client
 			rest.QueryParam{Name: "{{$q.Name}}", Value: param.{{$q.GoName}}},{{end}}{{end}}
 		).
 		Body({{if eq $v.HttpRequestBody.BodyName ""}}nil{{else if eq $v.HttpRequestBody.BodyName "*"}}param{{else if ne $v.HttpMethod "GET"}}param.{{$v.HttpRequestBody.GoBodyName}}{{else}}nil{{end}}).
-		{{if not $v.IsStreamClient}}Do(ctx){{else}}DoUpload(ctx, "file", param.FileName){{end}}.
+		Do(ctx).
 		{{if $.IsWarpHttpResponse}}TransformResponse(){{else}}RawResponse(){{end}}
 
 	if err != nil {
