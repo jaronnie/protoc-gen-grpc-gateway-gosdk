@@ -37,9 +37,11 @@ func main() {
 		pflag.PrintDefaults()
 	}
 
-	if os.Args[1] == "version" {
-		fmt.Printf("%s-%s\n", version, commit)
-		return
+	if len(os.Args) == 2 {
+		if os.Args[1] == "version" {
+			fmt.Printf("%s-%s\n", version, commit)
+			return
+		}
 	}
 
 	bindFlag()
