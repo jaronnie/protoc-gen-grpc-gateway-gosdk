@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+
 	"github.com/golang/glog"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
@@ -11,38 +12,91 @@ import (
 )
 
 var (
-	EnvFile      string
-	ScopeVersion string
+	EnvFile                           string
+	GoVersion                         string
+	GoModule                          string
+	SdkDir                            string
+	ScopeVersion                      string   // scopeVersion
+	ScopeVersions                     []string // scopeVersions used for clientSet
+	GatewayPrefix                     string   // microservice gateway prefix
+	IsWarpHttpResponse                bool     // is warped code, data, message
+	IsResourceExpansionCreateOrUpdate bool     // is to create or update resource expansion
 )
 
 var (
-	Version string
+	version string
+	commit  string
 )
 
 type HttpSdk struct{}
 
 func main() {
-	flag.StringVar(&EnvFile,
-		"env_file",
-		"./conf/cfg.toml",
-		"set protoc go http sdk env file")
-	flag.StringVar(&ScopeVersion,
-		"scopeVersion",
-		"",
-		"set scope version")
-	flag.Parse()
+	pflag.Usage = func() {
+		pflag.PrintDefaults()
+	}
+
+	bindFlag()
 
 	hs := HttpSdk{}
 	protogen.Options{
-		ParamFunc: flag.CommandLine.Set,
+		ParamFunc: pflag.CommandLine.Set,
 	}.Run(hs.Generate)
 }
 
-func (hs *HttpSdk) Generate(plugin *protogen.Plugin) error {
-	glog.V(1).Infof("get protoc go http sdk cmd flag logtostderr: [%v]", flag.CommandLine.Lookup("logtostderr").Value)
-	glog.V(1).Infof("get protoc go http sdk cmd flag env_file: [%v]", flag.CommandLine.Lookup("env_file").Value)
+func bindFlag() {
+	pflag.StringVar(&EnvFile,
+		"env_file",
+		"./conf/cfg.toml",
+		"set protoc go http sdk env file")
+	pflag.StringVar(&GoVersion,
+		"goVersion",
+		"1.18",
+		"set go version")
+	pflag.StringVar(&GoModule,
+		"goModule",
+		"",
+		"set go module",
+	)
+	pflag.StringVar(&SdkDir,
+		"sdkDir",
+		"",
+		"set sdk dir if in go module project",
+	)
+	pflag.StringVar(&ScopeVersion,
+		"scopeVersion",
+		"",
+		"set scope version",
+	)
+	pflag.StringSliceVar(&ScopeVersions,
+		"scopeVersions",
+		nil,
+		"set scope versions",
+	)
+	pflag.StringVar(&GatewayPrefix,
+		"gatewayPrefix",
+		"",
+		"set gateway prefix",
+	)
+	pflag.BoolVar(&IsWarpHttpResponse,
+		"isWarpHttpResponse",
+		false,
+		"isWarpHttpResponse",
+	)
+	pflag.BoolVar(&IsResourceExpansionCreateOrUpdate,
+		"isResourceExpansionCreateOrUpdate",
+		false,
+		"isResourceExpansionCreateOrUpdate",
+	)
 
-	glog.V(1).Infof("get protoc go http sdk version: [%v]", Version)
+	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
+	pflag.Parse()
+}
+
+func (hs *HttpSdk) Generate(plugin *protogen.Plugin) error {
+	glog.V(1).Infof("get protoc go http sdk cmd flag logtostderr: [%v]", pflag.CommandLine.Lookup("logtostderr").Value)
+	glog.V(1).Infof("get protoc go http sdk cmd flag env_file: [%v]", pflag.CommandLine.Lookup("env_file").Value)
+
+	glog.V(1).Infof("get protoc go http sdk version: [%v-%v]", version, commit)
 
 	viper.SetConfigFile(EnvFile)
 
@@ -51,8 +105,6 @@ func (hs *HttpSdk) Generate(plugin *protogen.Plugin) error {
 		return err
 	}
 
-	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
-	pflag.Parse()
 	if err = viper.BindPFlags(pflag.CommandLine); err != nil {
 		return err
 	}
