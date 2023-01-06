@@ -2,6 +2,5 @@ goVersion = "1.18"
 goModule = "github.com/jaronnie/autosdk"
 scopeVersion = "corev1"
 scopeVersions = ["corev1"] # microservice used
-gatewayPrefix = "/gateway" # microservice used
 isWarpHttpResponse = false # if warped code,data,message, set this env to true
-isResourceExpansionCreateOrUpdate = false # you can set this env to run once, then set this env to false
+isResourceExpansionCreateOrUpdate = true # you can set this env to run once, then set this env to false

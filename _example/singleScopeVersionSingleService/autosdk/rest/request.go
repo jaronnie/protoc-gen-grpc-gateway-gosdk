@@ -277,14 +277,15 @@ func (r *Request) DoUpload(ctx context.Context, fieldName, filePath string) Resu
 
 	defer rawResp.Body.Close()
 
-	if rawResp.StatusCode != 200 {
-		return Result{err: errors.Errorf("unhealthy status code: [%d], status message: [%s]", rawResp.StatusCode, rawResp.Status)}
-	}
-
 	data, err := ioutil.ReadAll(rawResp.Body)
 	if err != nil {
 		return Result{err: err, statusCode: rawResp.StatusCode, status: rawResp.Status}
 	}
+
+	if rawResp.StatusCode != 200 {
+		return Result{err: errors.Errorf("unhealthy status code: [%d], status message: [%s]", rawResp.StatusCode, rawResp.Status), body: data}
+	}
+
 	return Result{
 		body:       data,
 		err:        nil,
@@ -429,10 +430,7 @@ func (r Result) TransformResponse() ([]byte, error) {
 }
 
 func (r Result) RawResponse() ([]byte, error) {
-	if r.err != nil {
-		return nil, r.err
-	}
-	return r.body, nil
+	return r.body, r.err
 }
 
 // Error returns the error executing the request, nil if no error occurred.
