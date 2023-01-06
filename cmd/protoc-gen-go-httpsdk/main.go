@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"os"
 
 	"github.com/golang/glog"
 	"github.com/spf13/pflag"
@@ -35,6 +37,11 @@ func main() {
 		pflag.PrintDefaults()
 	}
 
+	if os.Args[1] == "version" {
+		fmt.Printf("%s-%s\n", version, commit)
+		return
+	}
+
 	bindFlag()
 
 	hs := HttpSdk{}
@@ -46,11 +53,11 @@ func main() {
 func bindFlag() {
 	pflag.StringVar(&EnvFile,
 		"env_file",
-		"./conf/cfg.toml",
+		"",
 		"set protoc go http sdk env file")
 	pflag.StringVar(&GoVersion,
 		"goVersion",
-		"1.18",
+		"",
 		"set go version")
 	pflag.StringVar(&GoModule,
 		"goModule",
@@ -92,17 +99,19 @@ func bindFlag() {
 	pflag.Parse()
 }
 
-func (hs *HttpSdk) Generate(plugin *protogen.Plugin) error {
+func (hs *HttpSdk) Generate(plugin *protogen.Plugin) (err error) {
 	glog.V(1).Infof("get protoc go http sdk cmd flag logtostderr: [%v]", pflag.CommandLine.Lookup("logtostderr").Value)
 	glog.V(1).Infof("get protoc go http sdk cmd flag env_file: [%v]", pflag.CommandLine.Lookup("env_file").Value)
 
 	glog.V(1).Infof("get protoc go http sdk version: [%v-%v]", version, commit)
 
-	viper.SetConfigFile(EnvFile)
+	if EnvFile != "" {
+		viper.SetConfigFile(EnvFile)
 
-	err := viper.ReadInConfig()
-	if err != nil {
-		return err
+		err := viper.ReadInConfig()
+		if err != nil {
+			return err
+		}
 	}
 
 	if err = viper.BindPFlags(pflag.CommandLine); err != nil {

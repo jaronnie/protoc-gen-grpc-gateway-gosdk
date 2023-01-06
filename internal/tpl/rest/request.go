@@ -13,8 +13,6 @@ import (
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
-	"os"
-	"path/filepath"
 	"reflect"
 	"strings"
 	"time"
@@ -215,7 +213,7 @@ func (r *Request) Do(ctx context.Context) Result {
 //
 // Error type:
 //  * http.Client.Do errors are returned directly.
-func (r *Request) DoUpload(ctx context.Context, fieldName, filePath string) Result {
+func (r *Request) DoUpload(ctx context.Context, fieldName string, filename string, filedata []byte) Result {
 	url, err := r.defaultUrl()
 	if err != nil {
 		return Result{err: err}
@@ -223,13 +221,9 @@ func (r *Request) DoUpload(ctx context.Context, fieldName, filePath string) Resu
 
 	payload := &bytes.Buffer{}
 	writer := multipart.NewWriter(payload)
-	file, err := os.Open(filePath)
-	defer file.Close()
-	if err != nil {
-		return Result{err: err}
-	}
-	part, err := writer.CreateFormFile(fieldName, filepath.Base(filePath))
-	_, err = io.Copy(part, file)
+
+	part, err := writer.CreateFormFile(fieldName, filename)
+	_, err = io.Copy(part, bytes.NewReader(filedata))
 	if err != nil {
 		return Result{err: err}
 	}
