@@ -62,7 +62,7 @@ func (r *Request) SubPath(subPath string, args ...PathParam) *Request {
 	for _, v := range args {
 		subPath = strings.ReplaceAll(subPath, "{"+v.Name+"}", cast.ToString(v.Value))
 	}
-	r.subPath = subPath
+	r.subPath = r.c.gatewayPrefix + subPath
 	return r
 }
 

@@ -18,7 +18,10 @@ func main() {
 		rest.WithPort("8090"),
 		rest.WithHeaders(map[string][]string{
 			"Content-Type": {"application/json"},
-		}))
+		}),
+		rest.WithGatewayPrefix("/gateway"),
+	)
+
 	if err != nil {
 		panic(err)
 	}

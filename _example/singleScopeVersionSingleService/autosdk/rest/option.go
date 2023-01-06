@@ -54,3 +54,10 @@ func WithRetryDelay(time time.Duration) Opt {
 		return nil
 	}
 }
+
+func WithGatewayPrefix(prefix string) Opt {
+	return func(c *RESTClient) error {
+		c.gatewayPrefix = prefix
+		return nil
+	}
+}

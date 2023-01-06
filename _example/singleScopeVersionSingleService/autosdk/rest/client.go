@@ -19,6 +19,8 @@ type RESTClient struct {
 	addr     string
 	port     string
 
+	gatewayPrefix string
+
 	retryTimes int
 	retryDelay time.Duration
 
@@ -42,13 +44,14 @@ func (r *RESTClient) Get() *Request {
 
 func RESTClientFor(config *RESTClient) (*RESTClient, error) {
 	rest := &RESTClient{
-		protocol:   config.protocol,
-		addr:       config.addr,
-		port:       config.port,
-		retryTimes: config.retryTimes,
-		retryDelay: config.retryDelay,
-		headers:    config.headers,
-		client:     config.client,
+		protocol:      config.protocol,
+		addr:          config.addr,
+		port:          config.port,
+		gatewayPrefix: config.gatewayPrefix,
+		retryTimes:    config.retryTimes,
+		retryDelay:    config.retryDelay,
+		headers:       config.headers,
+		client:        config.client,
 	}
 	return rest, nil
 }
