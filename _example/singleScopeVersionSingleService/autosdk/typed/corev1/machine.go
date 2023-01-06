@@ -4,8 +4,6 @@ package corev1
 import (
 	"context"
 
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-
 	"github.com/jaronnie/autosdk/pb/corev1"
 	"github.com/jaronnie/autosdk/rest"
 )
@@ -32,23 +30,18 @@ func newMachineClient(c *Corev1Client) *machineClient {
 
 func (x *machineClient) InitMachine(ctx context.Context, param *corev1.Machine) (*corev1.Machine, error) {
 	var resp corev1.Machine
-	response, err := x.client.Verb("POST").
+	err := x.client.Verb("POST").
 		SubPath(
 			"/gateway/core/api/v1/machine/init",
 		).
 		Params().
 		Body(param).
 		Do(ctx).
-		RawResponse()
+		Into(&resp, false)
 
 	if err != nil {
 		return nil, err
 	}
 
-	jsonb := new(runtime.JSONPb)
-	err = jsonb.Unmarshal(response, &resp)
-	if err != nil {
-		return nil, err
-	}
 	return &resp, nil
 }

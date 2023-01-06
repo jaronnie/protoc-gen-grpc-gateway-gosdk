@@ -4,8 +4,6 @@ package corev1
 import (
 	"context"
 
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-
 	"github.com/jaronnie/autosdk/pb/corev1"
 	"github.com/jaronnie/autosdk/rest"
 )
@@ -33,46 +31,36 @@ func newCredentialClient(c *Corev1Client) *credentialClient {
 
 func (x *credentialClient) InitCredential(ctx context.Context, param *corev1.Credential) (*corev1.Credential, error) {
 	var resp corev1.Credential
-	response, err := x.client.Verb("POST").
+	err := x.client.Verb("POST").
 		SubPath(
 			"/gateway/core/api/v1/credential/init",
 		).
 		Params().
 		Body(param).
 		Do(ctx).
-		RawResponse()
+		Into(&resp, false)
 
 	if err != nil {
 		return nil, err
 	}
 
-	jsonb := new(runtime.JSONPb)
-	err = jsonb.Unmarshal(response, &resp)
-	if err != nil {
-		return nil, err
-	}
 	return &resp, nil
 }
 
 func (x *credentialClient) UpdateCredential(ctx context.Context, param *corev1.Credential) (*corev1.Credential, error) {
 	var resp corev1.Credential
-	response, err := x.client.Verb("POST").
+	err := x.client.Verb("POST").
 		SubPath(
 			"/gateway/core/api/v1/credential/update",
 		).
 		Params().
 		Body(param).
 		Do(ctx).
-		RawResponse()
+		Into(&resp, false)
 
 	if err != nil {
 		return nil, err
 	}
 
-	jsonb := new(runtime.JSONPb)
-	err = jsonb.Unmarshal(response, &resp)
-	if err != nil {
-		return nil, err
-	}
 	return &resp, nil
 }

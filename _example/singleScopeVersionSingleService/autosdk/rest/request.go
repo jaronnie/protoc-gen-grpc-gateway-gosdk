@@ -16,6 +16,7 @@ import (
 
 	simplejson "github.com/bitly/go-simplejson"
 	"github.com/gorilla/websocket"
+	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
 )
@@ -308,7 +309,7 @@ func doRequest(client *http.Client, request *http.Request) (*http.Response, erro
 }
 
 // Into stores the result into obj, if possible. If obj is nil it is ignored.
-func (r Result) Into(obj interface{}) error {
+func (r Result) Into(obj interface{}, isWarpHttpResponse bool) error {
 	if r.err != nil {
 		return r.err
 	}
@@ -316,26 +317,41 @@ func (r Result) Into(obj interface{}) error {
 		return errors.New("object is not a ptr")
 	}
 
-	// parse response data
-	// code message data
 	j, err := simplejson.NewJson(r.body)
 	if err != nil {
 		return err
 	}
-	code, err := j.Get("code").Int()
-	if err != nil {
-		return err
+
+	// parse response data
+	// code message data
+	var marshalJSON []byte
+	if isWarpHttpResponse {
+		code, err := j.Get("code").Int()
+		if err != nil {
+			return err
+		}
+		if code != http.StatusOK {
+			message, _ := j.Get("message").String()
+			return fmt.Errorf(message)
+		}
+		marshalJSON, err = j.Get("data").MarshalJSON()
+		if err != nil {
+			return err
+		}
+	} else {
+		marshalJSON, err = j.MarshalJSON()
+		if err != nil {
+			return err
+		}
 	}
-	if code != http.StatusOK {
-		message, _ := j.Get("message").String()
-		return fmt.Errorf(message)
-	}
-	marshalJSON, err := j.Get("data").MarshalJSON()
+
+	jsonb := new(runtime.JSONPb)
+	err = jsonb.Unmarshal(marshalJSON, &obj)
 	if err != nil {
 		return err
 	}
 
-	return json.Unmarshal(marshalJSON, obj)
+	return nil
 }
 
 // StatusCode returns the HTTP status code of the request. (Only valid if no

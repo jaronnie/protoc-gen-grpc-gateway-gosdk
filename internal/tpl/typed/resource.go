@@ -25,8 +25,6 @@ import (
 
 	{{range $v := .GoImportPaths | uniq}}"{{$v}}"
 	{{end}}
-
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	
 	"{{.GoModule}}/rest"
 )
@@ -63,7 +61,7 @@ func new{{.UpResource}}Client(c *{{.UpScopeVersion}}Client) *{{.Resource}}Client
 		Body({{if eq $v.HttpRequestBody.BodyName ""}}nil{{else if eq $v.HttpRequestBody.BodyName "*"}}param{{else if ne $v.HttpMethod "GET"}}param.{{$v.HttpRequestBody.GoBodyName}}{{else}}nil{{end}})
 
 	return request, nil{{else}}var resp {{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}
-		response, err := x.client.Verb("{{$v.HttpMethod}}").
+		err := x.client.Verb("{{$v.HttpMethod}}").
 		SubPath(
 			"{{$v.Url}}",{{range $p := $v.PathParams}}
 			rest.PathParam{Name: "{{$p.Name}}", Value: param.{{$p.GoName}}},{{end}}
@@ -73,17 +71,12 @@ func new{{.UpResource}}Client(c *{{.UpScopeVersion}}Client) *{{.Resource}}Client
 		).
 		Body({{if eq $v.HttpRequestBody.BodyName ""}}nil{{else if eq $v.HttpRequestBody.BodyName "*"}}param{{else if ne $v.HttpMethod "GET"}}param.{{$v.HttpRequestBody.GoBodyName}}{{else}}nil{{end}}).
 		Do(ctx).
-		{{if $.IsWarpHttpResponse}}TransformResponse(){{else}}RawResponse(){{end}}
+		Into(&resp, {{$.IsWarpHttpResponse}})
 
 	if err != nil {
 		return nil, err
 	}
 
-	jsonb := new(runtime.JSONPb)
-	err = jsonb.Unmarshal(response, &resp)
-	if err != nil {
-		return nil, err
-	}
 	return &resp, nil{{end}}
 }
 {{end}}
