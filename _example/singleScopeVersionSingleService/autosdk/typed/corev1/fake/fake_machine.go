@@ -5,10 +5,12 @@ import (
 	"context"
 
 	"github.com/jaronnie/autosdk/pb/corev1"
+	"github.com/jaronnie/autosdk/rest"
 )
 
 var (
-	FakeReturnInitMachine = &corev1.Machine{}
+	FakeReturnInitMachine     = &corev1.Machine{}
+	FakeReturnDownloadMachine = &rest.Request{}
 )
 
 type MachineGetter interface {
@@ -17,6 +19,7 @@ type MachineGetter interface {
 
 type MachineInterface interface {
 	InitMachine(ctx context.Context, param *corev1.Machine) (*corev1.Machine, error)
+	DownloadMachine(param *corev1.Machine) (*rest.Request, error)
 }
 
 type FakeMachine struct {
@@ -25,4 +28,8 @@ type FakeMachine struct {
 
 func (f *FakeMachine) InitMachine(ctx context.Context, param *corev1.Machine) (*corev1.Machine, error) {
 	return FakeReturnInitMachine, nil
+}
+
+func (f *FakeMachine) DownloadMachine(param *corev1.Machine) (*rest.Request, error) {
+	return FakeReturnDownloadMachine, nil
 }

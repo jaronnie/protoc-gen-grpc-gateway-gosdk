@@ -14,6 +14,7 @@ type MachineGetter interface {
 
 type MachineInterface interface {
 	InitMachine(ctx context.Context, param *corev1.Machine) (*corev1.Machine, error)
+	DownloadMachine(param *corev1.Machine) (*rest.Request, error)
 
 	MachineExpansion
 }
@@ -44,4 +45,15 @@ func (x *machineClient) InitMachine(ctx context.Context, param *corev1.Machine) 
 	}
 
 	return &resp, nil
+}
+
+func (x *machineClient) DownloadMachine(param *corev1.Machine) (*rest.Request, error) {
+	request := x.client.Verb("POST").
+		SubPath(
+			"/gateway/core/api/v1/machine/download",
+		).
+		Params().
+		Body(param)
+
+	return request, nil
 }

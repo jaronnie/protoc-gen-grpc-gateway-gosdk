@@ -29,4 +29,12 @@ service corev1 {
       body: "*"
     };
   }
+
+  // stream
+  rpc DownloadMachine (Machine) returns (stream Machine) {
+    option (google.api.http) = {
+      post: "/api/v1/machine/download"
+      body: "*"
+    };
+  }
 }
