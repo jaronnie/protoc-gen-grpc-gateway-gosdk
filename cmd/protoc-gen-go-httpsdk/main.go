@@ -11,6 +11,7 @@ import (
 	"google.golang.org/protobuf/compiler/protogen"
 
 	"github.com/jaronnie/protoc-gen-go-httpsdk/internal"
+	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/gen/codegenerator"
 )
 
 var (
@@ -106,6 +107,8 @@ func (hs *HttpSdk) Generate(plugin *protogen.Plugin) (err error) {
 	glog.V(1).Infof("get protoc go http sdk cmd flag env_file: [%v]", pflag.CommandLine.Lookup("env_file").Value)
 
 	glog.V(1).Infof("get protoc go http sdk version: [%v-%v]", version, commit)
+
+	codegenerator.SetSupportedFeaturesOnPluginGen(plugin)
 
 	if EnvFile != "" {
 		viper.SetConfigFile(EnvFile)
