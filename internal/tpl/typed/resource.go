@@ -5,14 +5,13 @@ import "github.com/jaronnie/protoc-gen-go-httpsdk/internal/vars"
 type ResourceData struct {
 	Gateways []*vars.Gateway
 
-	IsWarpHttpResponse                bool     // is warped code,data,message
-	IsResourceExpansionCreateOrUpdate bool     // is to create or update resource expansion
-	GoModule                          string   // github.com/jaronnie/autosdk
-	GoImportPaths                     []string // pb import path [github.com/jaronnie/autosdk/pb/corev1]
-	ScopeVersion                      string   // corev1
-	UpScopeVersion                    string   // Corev1
-	Resource                          string   // credential
-	UpResource                        string   // Credential
+	IsWarpHttpResponse bool     // is warped code,data,message
+	GoModule           string   // github.com/jaronnie/autosdk
+	GoImportPaths      []string // pb import path [github.com/jaronnie/autosdk/pb/corev1]
+	ScopeVersion       string   // corev1
+	UpScopeVersion     string   // Corev1
+	Resource           string   // credential
+	UpResource         string   // Credential
 }
 
 var ResourceTpl = `
@@ -36,7 +35,7 @@ type {{.UpResource}}Getter interface {
 type {{.UpResource}}Interface interface {
 	{{range $k, $v := .Gateways}}{{template "methodDefine" $v}}
 	{{end}}
-	{{if .IsResourceExpansionCreateOrUpdate}}{{.UpResource}}Expansion{{end}}
+	{{.UpResource}}Expansion
 }
 
 type {{.Resource}}Client struct {

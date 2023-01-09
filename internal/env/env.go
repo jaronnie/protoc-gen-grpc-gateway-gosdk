@@ -13,14 +13,14 @@ import (
 )
 
 type PluginEnv struct {
-	GoVersion                         string
-	GoModule                          string `validate:"required"`
-	SdkDir                            string
-	ScopeVersion                      string   `validate:"required"` // scopeVersion
-	ScopeVersions                     []string // scopeVersions used for clientSet
-	GatewayPrefix                     string   // microservice gateway prefix
-	IsWarpHttpResponse                bool     // is warped code, data, message
-	IsResourceExpansionCreateOrUpdate bool     // is to create or update resource expansion
+	GoVersion                 string
+	GoModule                  string `validate:"required"`
+	SdkDir                    string
+	ScopeVersion              string   `validate:"required"` // scopeVersion
+	ScopeVersions             []string // scopeVersions used for clientSet
+	GatewayPrefix             string   // microservice gateway prefix
+	IsWarpHttpResponse        bool     // is warped code, data, message
+	IsResourceExpansionUpdate bool     // is to update resource expansion
 }
 
 func (p *PluginEnv) IsNeedGenerateGoMod() bool {

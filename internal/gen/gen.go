@@ -193,15 +193,14 @@ func (x *GenHttpSdk) GenResource(scopeResourceGws vars.ScopeResourceGateway) err
 			}
 			scopeResourceFile = x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/%s.go", scope, resource), "")
 			template, err := utilx.ParseTemplate(typed.ResourceData{
-				Gateways:                          gws,
-				IsResourceExpansionCreateOrUpdate: x.Env.IsResourceExpansionCreateOrUpdate,
-				IsWarpHttpResponse:                x.Env.IsWarpHttpResponse,
-				GoModule:                          x.Env.GoModule,
-				GoImportPaths:                     goImportPaths,
-				ScopeVersion:                      string(scope),
-				UpScopeVersion:                    utilx.FirstUpper(string(scope)),
-				Resource:                          string(resource),
-				UpResource:                        utilx.FirstUpper(string(resource)),
+				Gateways:           gws,
+				IsWarpHttpResponse: x.Env.IsWarpHttpResponse,
+				GoModule:           x.Env.GoModule,
+				GoImportPaths:      goImportPaths,
+				ScopeVersion:       string(scope),
+				UpScopeVersion:     utilx.FirstUpper(string(scope)),
+				Resource:           string(resource),
+				UpResource:         utilx.FirstUpper(string(resource)),
 			}, []byte(typed.ResourceTpl))
 			if err != nil {
 				glog.Errorf("generate resource meet error. Err: [%v]", err)
@@ -215,7 +214,7 @@ func (x *GenHttpSdk) GenResource(scopeResourceGws vars.ScopeResourceGateway) err
 	}
 
 	// gen scope expansion resource
-	if x.Env.IsResourceExpansionCreateOrUpdate {
+	if x.Env.IsResourceExpansionUpdate {
 		for scope, resources := range scopeResourceGws {
 			for resource, _ := range resources {
 				var scopeResourceExpansionFile *protogen.GeneratedFile

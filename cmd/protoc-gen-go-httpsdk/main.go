@@ -15,15 +15,15 @@ import (
 )
 
 var (
-	EnvFile                           string
-	GoVersion                         string
-	GoModule                          string
-	SdkDir                            string
-	ScopeVersion                      string   // scopeVersion
-	ScopeVersions                     []string // scopeVersions used for clientSet
-	GatewayPrefix                     string   // microservice gateway prefix
-	IsWarpHttpResponse                bool     // is warped code, data, message
-	IsResourceExpansionCreateOrUpdate bool     // is to create or update resource expansion
+	EnvFile                   string
+	GoVersion                 string
+	GoModule                  string
+	SdkDir                    string
+	ScopeVersion              string   // scopeVersion
+	ScopeVersions             []string // scopeVersions used for clientSet
+	GatewayPrefix             string   // microservice gateway prefix
+	IsWarpHttpResponse        bool     // is warped code, data, message
+	IsResourceExpansionUpdate bool     // is to update resource expansion
 )
 
 var (
@@ -92,10 +92,10 @@ func bindFlag() {
 		false,
 		"isWarpHttpResponse",
 	)
-	pflag.BoolVar(&IsResourceExpansionCreateOrUpdate,
-		"isResourceExpansionCreateOrUpdate",
-		false,
-		"isResourceExpansionCreateOrUpdate",
+	pflag.BoolVar(&IsResourceExpansionUpdate,
+		"isResourceExpansionUpdate",
+		true,
+		"isResourceExpansionUpdate",
 	)
 
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
