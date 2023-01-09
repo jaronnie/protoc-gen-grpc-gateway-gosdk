@@ -21,6 +21,8 @@ type Gateway struct {
 	Url              string
 	PathParams       []*PathParam
 	QueryParams      []*QueryParam
+
+	IsSpecified bool
 }
 
 type ProtoRequestBody struct {

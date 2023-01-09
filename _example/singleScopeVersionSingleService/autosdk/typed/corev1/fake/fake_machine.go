@@ -2,14 +2,12 @@
 package fake
 
 import (
-	"context"
-
 	"github.com/jaronnie/autosdk/pb/corev1"
 	"github.com/jaronnie/autosdk/rest"
 )
 
 var (
-	FakeReturnInitMachine     = &corev1.Machine{}
+	FakeReturnInitMachine     = &rest.Request{}
 	FakeReturnDownloadMachine = &rest.Request{}
 )
 
@@ -18,7 +16,7 @@ type MachineGetter interface {
 }
 
 type MachineInterface interface {
-	InitMachine(ctx context.Context, param *corev1.Machine) (*corev1.Machine, error)
+	InitMachine(param *corev1.Machine) (*rest.Request, error)
 	DownloadMachine(param *corev1.Machine) (*rest.Request, error)
 }
 
@@ -26,7 +24,7 @@ type FakeMachine struct {
 	Fake *FakeCorev1
 }
 
-func (f *FakeMachine) InitMachine(ctx context.Context, param *corev1.Machine) (*corev1.Machine, error) {
+func (f *FakeMachine) InitMachine(param *corev1.Machine) (*rest.Request, error) {
 	return FakeReturnInitMachine, nil
 }
 

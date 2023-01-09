@@ -21,14 +21,14 @@ package fake
 import (
 	"context"
 
-	{{range $k, $v := .Gateways}}{{if $v.IsStreamServer}}"{{$.GoModule}}/rest"{{break}}{{end}}{{end}}
+	{{range $k, $v := .Gateways}}{{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}"{{$.GoModule}}/rest"{{break}}{{end}}{{end}}
 
 	{{range $v := .GoImportPaths}}"{{$v}}"
 	{{end}}
 )
 
 var (
-	{{range $k, $v := .Gateways}}FakeReturn{{$v.FuncName}} = &{{if $v.IsStreamServer}}rest.Request{}{{else}}{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{}{{end}}
+	{{range $k, $v := .Gateways}}FakeReturn{{$v.FuncName}} = &{{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}rest.Request{}{{else}}{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{}{{end}}
 	{{end}}
 )
 
@@ -37,7 +37,7 @@ type {{.UpResource}}Getter interface {
 }
 
 type {{.UpResource}}Interface interface {
-	{{range $k, $v := .Gateways}}{{$v.FuncName}}({{if $v.IsStreamServer}}{{else}}ctx context.Context,{{end}} param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if $v.IsStreamServer}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error)
+	{{range $k, $v := .Gateways}}{{$v.FuncName}}({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}{{else}}ctx context.Context,{{end}} param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error)
 	{{end}}
 }
 
@@ -45,7 +45,7 @@ type Fake{{.UpResource}} struct {
 	Fake *Fake{{.UpScopeVersion}}
 }
 
-{{range $k, $v := .Gateways}}func (f *Fake{{$.UpResource}}) {{$v.FuncName}}({{if $v.IsStreamServer}}{{else}}ctx context.Context,{{end}}param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if $v.IsStreamServer}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error) {
+{{range $k, $v := .Gateways}}func (f *Fake{{$.UpResource}}) {{$v.FuncName}}({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}{{else}}ctx context.Context,{{end}}param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error) {
 	return FakeReturn{{$v.FuncName}}, nil
 }
 {{end}}

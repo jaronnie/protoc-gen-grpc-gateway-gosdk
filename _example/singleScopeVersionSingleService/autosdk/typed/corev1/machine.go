@@ -2,8 +2,6 @@
 package corev1
 
 import (
-	"context"
-
 	"github.com/jaronnie/autosdk/pb/corev1"
 	"github.com/jaronnie/autosdk/rest"
 )
@@ -13,7 +11,7 @@ type MachineGetter interface {
 }
 
 type MachineInterface interface {
-	InitMachine(ctx context.Context, param *corev1.Machine) (*corev1.Machine, error)
+	InitMachine(param *corev1.Machine) (*rest.Request, error)
 	DownloadMachine(param *corev1.Machine) (*rest.Request, error)
 
 	MachineExpansion
@@ -29,22 +27,15 @@ func newMachineClient(c *Corev1Client) *machineClient {
 	}
 }
 
-func (x *machineClient) InitMachine(ctx context.Context, param *corev1.Machine) (*corev1.Machine, error) {
-	var resp corev1.Machine
-	err := x.client.Verb("POST").
+func (x *machineClient) InitMachine(param *corev1.Machine) (*rest.Request, error) {
+	request := x.client.Verb("POST").
 		SubPath(
 			"/gateway/core/api/v1/machine/init",
 		).
 		Params().
-		Body(param).
-		Do(ctx).
-		Into(&resp, false)
+		Body(param)
 
-	if err != nil {
-		return nil, err
-	}
-
-	return &resp, nil
+	return request, nil
 }
 
 func (x *machineClient) DownloadMachine(param *corev1.Machine) (*rest.Request, error) {

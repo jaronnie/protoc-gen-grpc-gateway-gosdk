@@ -9,13 +9,13 @@ import (
 )
 
 func TestInitMachine(t *testing.T) {
-	t.Run("test init machine", func(t *testing.T) {
-		fakecorev1.FakeReturnInitMachine = &corev1.Machine{
+	t.Run("test init credential", func(t *testing.T) {
+		fakecorev1.FakeReturnInitCredential = &corev1.Credential{
 			Id:   2,
-			Type: "colocation",
+			Name: "colocation",
 		}
 		fakeClient := &fake.Clientset{}
-		machine, err := InitMachine(fakeClient)
+		machine, err := InitCredential(fakeClient)
 		if err != nil {
 			t.Log(err.Error())
 			return

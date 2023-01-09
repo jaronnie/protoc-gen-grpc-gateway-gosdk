@@ -21,6 +21,8 @@ type PluginEnv struct {
 	GatewayPrefix             string   // microservice gateway prefix
 	IsWarpHttpResponse        bool     // is warped code, data, message
 	IsResourceExpansionUpdate bool     // is to update resource expansion
+
+	SpecifiedMethods []string // specified rpc methods
 }
 
 func (p *PluginEnv) IsNeedGenerateGoMod() bool {

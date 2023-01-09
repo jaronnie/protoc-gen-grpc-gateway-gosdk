@@ -2,6 +2,7 @@ package internal
 
 import (
 	"github.com/golang/glog"
+	"github.com/pkg/errors"
 	"google.golang.org/protobuf/compiler/protogen"
 
 	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/env"
@@ -69,24 +70,24 @@ func Generate(plugin *protogen.Plugin) error {
 
 	// generate sdk rest frame
 	if err = ghs.GenRestFrame(); err != nil {
-		return err
+		return errors.Wrap(err, "generate sdk rest frame")
 	}
 	glog.V(1).Infof("generate sdk rest frame successfully")
 
 	// gen scope_client file
 	if err = ghs.GenScopeClient(scopeResourceGws); err != nil {
-		return err
+		return errors.Wrap(err, "generate scope client")
 	}
 	glog.V(1).Infof("generate scope client successfully")
 
 	if err = ghs.GenResource(scopeResourceGws); err != nil {
-		return err
+		return errors.Wrap(err, "generate resource")
 	}
 	glog.V(1).Infof("generate scope resource successfully")
 
 	// gen clientset file
 	if err = ghs.GenClientSet(scopeResourceGws); err != nil {
-		return err
+		return errors.Wrap(err, "generate client set")
 	}
 	glog.V(1).Infof("generate client set successfully")
 

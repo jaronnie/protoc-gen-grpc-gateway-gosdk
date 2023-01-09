@@ -24,6 +24,8 @@ var (
 	GatewayPrefix             string   // microservice gateway prefix
 	IsWarpHttpResponse        bool     // is warped code, data, message
 	IsResourceExpansionUpdate bool     // is to update resource expansion
+
+	SpecifiedMethods []string // specified rpc methods
 )
 
 var (
@@ -96,6 +98,11 @@ func bindFlag() {
 		"isResourceExpansionUpdate",
 		true,
 		"isResourceExpansionUpdate",
+	)
+	pflag.StringSliceVar(&SpecifiedMethods,
+		"specifiedMethods",
+		nil,
+		"set SpecifiedMethods",
 	)
 
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)

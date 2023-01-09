@@ -94,6 +94,13 @@ func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, er
 		m.GoName, httpMethod, url, m.Input.GoIdent.GoName,
 		m.Output.GoIdent.GoName, pathParams, queryParams, httpRule.Body)
 
+	var isSpecified bool
+	for _, v := range env.SpecifiedMethods {
+		if v == m.GoName {
+			isSpecified = true
+		}
+	}
+
 	return &vars.Gateway{
 		ProtoRequestBody: vars.ProtoRequestBody{
 			Name:         m.Input.GoIdent.GoName,
@@ -117,5 +124,6 @@ func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, er
 		Url:              url,
 		PathParams:       pathParams,
 		QueryParams:      queryParams,
+		IsSpecified:      isSpecified,
 	}, nil
 }
