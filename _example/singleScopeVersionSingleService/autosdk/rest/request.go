@@ -72,9 +72,16 @@ type QueryParam struct {
 }
 
 func (r *Request) Params(args ...QueryParam) *Request {
+	if len(args) == 0 {
+		return r
+	}
 	queryParams := "?"
-	for _, v := range args {
-		queryParams += fmt.Sprintf("%s=%s&", v.Name, cast.ToString(v.Value))
+	for i, v := range args {
+		if i == len(args)-1 {
+			queryParams += fmt.Sprintf("%s=%s", v.Name, cast.ToString(v.Value))
+		} else {
+			queryParams += fmt.Sprintf("%s=%s&", v.Name, cast.ToString(v.Value))
+		}
 	}
 	r.params = queryParams
 	return r
