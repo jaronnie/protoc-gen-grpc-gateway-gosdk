@@ -120,7 +120,7 @@ func (hs *HttpSdk) Generate(plugin *protogen.Plugin) (err error) {
 	if EnvFile != "" {
 		viper.SetConfigFile(EnvFile)
 
-		err := viper.ReadInConfig()
+		err = viper.ReadInConfig()
 		if err != nil {
 			return err
 		}
