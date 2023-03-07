@@ -6,10 +6,12 @@ to generate go http sdk similar to k8s.
 
 ## install 
 
+make sure you have already installed [task](https://github.com/go-task/task) and [goreleaser](https://github.com/goreleaser/goreleaser) tools first.
+
 ```shell
 git clone https://github.com/jaronnie/protoc-gen-go-httpsdk.git
 cd protoc-gen-go-httpsdk
-make build
+task install
 ```
 
 ## _example
