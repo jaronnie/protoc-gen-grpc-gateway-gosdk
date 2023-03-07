@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/golang/glog"
 	"github.com/spf13/pflag"
@@ -26,6 +27,8 @@ var (
 	IsResourceExpansionUpdate bool     // is to update resource expansion
 
 	SpecifiedMethods []string // specified rpc methods
+
+	Debug bool // used to debug
 )
 
 var (
@@ -104,12 +107,22 @@ func bindFlag() {
 		nil,
 		"set SpecifiedMethods",
 	)
+	pflag.BoolVar(&Debug,
+		"debug",
+		false,
+		"is debug",
+	)
 
 	pflag.CommandLine.AddGoFlagSet(flag.CommandLine)
 	pflag.Parse()
 }
 
 func (hs *HttpSdk) Generate(plugin *protogen.Plugin) (err error) {
+	if Debug {
+		// into debug mode, you can attach to this process
+		time.Sleep(time.Second * 20)
+	}
+
 	glog.V(1).Infof("get protoc go http sdk cmd flag logtostderr: [%v]", pflag.CommandLine.Lookup("logtostderr").Value)
 	glog.V(1).Infof("get protoc go http sdk cmd flag env_file: [%v]", pflag.CommandLine.Lookup("env_file").Value)
 
