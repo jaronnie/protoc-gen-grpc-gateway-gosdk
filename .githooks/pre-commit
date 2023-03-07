@@ -1,2 +1,2 @@
 #!/bin/sh
-./script/goimports.sh
+./scripts/goimports.sh
