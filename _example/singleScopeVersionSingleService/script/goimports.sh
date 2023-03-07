@@ -12,7 +12,7 @@ PATH="${WorkPath}"/tools:"${PATH}"
 if [ ! -f "$WorkPath"/tools/goimports-reviser-darwin ]; then
   {
     mkdir -p tools
-    wget -P "${WorkPath}"/tools https://resource.gocloudcoder.com/goimports-reviser-darwin
+    curl -o "${WorkPath}"/tools/goimports-reviser-darwin https://resource.gocloudcoder.com/goimports-reviser-darwin
     chmod +x "${WorkPath}"/tools/goimports-reviser-darwin
   }
 fi

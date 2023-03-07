@@ -10,7 +10,7 @@ function generateFunc() {
       dir_name="${dir##*/}"
       if [ -d "$dir" ]; then
           if [ "$1" = "debug" ]; then
-            protoc --proto_path="$dir" --go_out="$(pwd)"/autosdk/pb --go-httpsdk_out=logtostderr=true,v=1,scopeVersion="$dir_name",gatewayPrefix=/gateway,env_file=./conf/cfg.toml:"$(pwd)"/autosdk "$dir"/*.proto
+            protoc --proto_path="$dir" --go_out="$(pwd)"/autosdk/pb --go-httpsdk_out=logtostderr=true,v=1,scopeVersion="$dir_name",gatewayPrefix=/gateway,env_file=./conf/cfg.toml,debug=true:"$(pwd)"/autosdk "$dir"/*.proto
           else
             protoc --proto_path="$dir" --go_out="$(pwd)"/autosdk/pb --go-httpsdk_out=logtostderr=true,scopeVersion="$dir_name",gatewayPrefix=/gateway,env_file=./conf/cfg.toml:"$(pwd)"/autosdk "$dir"/*.proto
           fi
