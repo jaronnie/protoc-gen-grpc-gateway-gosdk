@@ -1,6 +1,9 @@
 version: "3"
 
 tasks:
+  debug:
+    cmds:
+      - go build -o $GOBIN/protoc-gen-go-httpsdk cmd/protoc-gen-go-httpsdk/main.go 
   install:
     deps:
       - build
