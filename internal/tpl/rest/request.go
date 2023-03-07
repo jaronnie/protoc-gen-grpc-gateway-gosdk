@@ -220,7 +220,7 @@ func (r *Request) Do(ctx context.Context) Result {
 // processing.
 //
 // Error type:
-//  * http.Client.Do errors are returned directly.
+// http.Client.Do errors are returned directly.
 func (r *Request) DoUpload(ctx context.Context, fieldName string, filename string, filedata []byte) Result {
 	url, err := r.defaultUrl()
 	if err != nil {
