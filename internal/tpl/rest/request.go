@@ -18,7 +18,8 @@ import (
 	"time"
 
 	simplejson "github.com/bitly/go-simplejson"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"google.golang.org/protobuf/encoding/protojson"
+	"google.golang.org/protobuf/proto"
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
@@ -231,6 +232,9 @@ func (r *Request) DoUpload(ctx context.Context, fieldName string, filename strin
 	writer := multipart.NewWriter(payload)
 
 	part, err := writer.CreateFormFile(fieldName, filename)
+	if err != nil {
+		return Result{err: err}
+	}
 	_, err = io.Copy(part, bytes.NewReader(filedata))
 	if err != nil {
 		return Result{err: err}
@@ -355,8 +359,13 @@ func (r Result) Into(obj interface{}, isWarpHttpResponse bool) error {
 		}
 	}
 
-	jsonb := new(runtime.JSONPb)
-	err = jsonb.Unmarshal(marshalJSON, &obj)
+	switch obj.(type) {
+	case proto.Message:
+		err = protojson.Unmarshal([]byte(marshalJSON), obj.(proto.Message))
+	default:
+		err = json.Unmarshal(marshalJSON, &obj)
+	}
+
 	if err != nil {
 		return err
 	}
