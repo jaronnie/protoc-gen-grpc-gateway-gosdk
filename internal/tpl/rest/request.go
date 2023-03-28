@@ -348,7 +348,9 @@ func (r Result) Into(obj interface{}, isWarpHttpResponse bool) error {
 			message, _ := j.Get("message").String()
 			return fmt.Errorf(message)
 		}
-		marshalJSON, err = j.Get("data").MarshalJSON()
+		data := j.Get("data")
+		data.Del("@type") // 适配 grpc 存在的 @type 字段
+		marshalJSON, err = data.MarshalJSON()
 		if err != nil {
 			return err
 		}
