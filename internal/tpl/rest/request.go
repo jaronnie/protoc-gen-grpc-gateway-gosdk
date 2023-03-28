@@ -81,6 +81,9 @@ func (r *Request) Params(args ...QueryParam) *Request {
 	}
 	queryParams := "?"
 	for i, v := range args {
+		if cast.ToString(v.Value) == "" {
+			continue
+		}
 		if i == len(args) - 1 {
 			queryParams += fmt.Sprintf("%s=%s", v.Name, cast.ToString(v.Value))
 		} else {
