@@ -48,7 +48,10 @@ func new{{.UpResource}}Client(c *{{.UpScopeVersion}}Client) *{{.Resource}}Client
 	}
 }
 
-{{range $k, $v := .Gateways}}func (x *{{$.Resource}}Client) {{template "methodDefine" $v}} {
+{{range $k, $v := .Gateways}}// {{.FuncName}} {{.Comments}}
+// trans *{{.ProtoRequestBody.RootPath}}.{{.ProtoRequestBody.Name}} into *{{.HttpResponseBody.RootPath}}.{{.HttpResponseBody.Name}}
+// API: {{$v.Url}}
+func (x *{{$.Resource}}Client) {{template "methodDefine" $v}} {
 	{{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}request := x.client.Verb("{{$v.HttpMethod}}").
 		SubPath(
 			"{{$v.Url}}",{{range $p := $v.PathParams}}

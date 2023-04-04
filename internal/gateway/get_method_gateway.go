@@ -120,6 +120,7 @@ func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, er
 		IsStreamServer:   m.Desc.IsStreamingServer(),
 		ProtoServiceName: string(m.Parent.Desc.Name()),
 		FuncName:         m.GoName,
+		Comments:         strings.TrimLeft(strings.TrimRight(string(m.Comments.Leading), "\n"), " "),
 		HttpMethod:       httpMethod,
 		Url:              url,
 		PathParams:       pathParams,

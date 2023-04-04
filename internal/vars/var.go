@@ -17,6 +17,7 @@ type Gateway struct {
 	IsStreamServer   bool // is stream server
 	ProtoServiceName string
 	FuncName         string
+	Comments         string
 	HttpMethod       string
 	Url              string
 	PathParams       []*PathParam
