@@ -9,6 +9,7 @@ import "google/api/annotations.proto";
 // Here is the overall greeting service definition where we define all our endpoints
 service corev1 {
   // Sends a greeting
+  // test comments
   rpc InitCredential (Credential) returns (Credential) {
     option (google.api.http) = {
       post: "/api/v1/credential/init"

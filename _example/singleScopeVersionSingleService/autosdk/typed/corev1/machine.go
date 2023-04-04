@@ -11,7 +11,13 @@ type MachineGetter interface {
 }
 
 type MachineInterface interface {
+	// InitMachine Implement: /gateway/core/api/v1/machine/init
+	// Trans *corev1.Machine into *corev1.Machine
 	InitMachine(param *corev1.Machine) (*rest.Request, error)
+
+	// DownloadMachine Implement: /gateway/core/api/v1/machine/download
+	// Trans *corev1.Machine into *corev1.Machine
+	// stream
 	DownloadMachine(param *corev1.Machine) (*rest.Request, error)
 
 	MachineExpansion

@@ -101,6 +101,11 @@ func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, er
 		}
 	}
 
+	comments := strings.TrimRight(m.Comments.Leading.String(), "\n")
+	if comments != "" {
+		comments = "\n" + comments
+	}
+
 	return &vars.Gateway{
 		ProtoRequestBody: vars.ProtoRequestBody{
 			Name:         m.Input.GoIdent.GoName,
@@ -120,7 +125,7 @@ func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, er
 		IsStreamServer:   m.Desc.IsStreamingServer(),
 		ProtoServiceName: string(m.Parent.Desc.Name()),
 		FuncName:         m.GoName,
-		Comments:         strings.TrimLeft(strings.TrimRight(string(m.Comments.Leading), "\n"), " "),
+		Comments:         comments,
 		HttpMethod:       httpMethod,
 		Url:              url,
 		PathParams:       pathParams,

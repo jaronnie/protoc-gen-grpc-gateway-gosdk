@@ -13,7 +13,14 @@ type CredentialGetter interface {
 }
 
 type CredentialInterface interface {
+	// InitCredential Implement: /gateway/core/api/v1/credential/init
+	// Trans *corev1.Credential into *corev1.Credential
+	// Sends a greeting
+	// test comments
 	InitCredential(ctx context.Context, param *corev1.Credential) (*corev1.Credential, error)
+
+	// UpdateCredential Implement: /gateway/core/api/v1/credential/update
+	// Trans *corev1.Credential into *corev1.Credential
 	UpdateCredential(ctx context.Context, param *corev1.Credential) (*corev1.Credential, error)
 
 	CredentialExpansion

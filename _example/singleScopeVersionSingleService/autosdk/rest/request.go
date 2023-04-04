@@ -16,9 +16,10 @@ import (
 
 	simplejson "github.com/bitly/go-simplejson"
 	"github.com/gorilla/websocket"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
+	"google.golang.org/protobuf/encoding/protojson"
+	"google.golang.org/protobuf/proto"
 )
 
 // Request allows for building up a request to a server in a chained fashion.
@@ -77,6 +78,9 @@ func (r *Request) Params(args ...QueryParam) *Request {
 	}
 	queryParams := "?"
 	for i, v := range args {
+		if cast.ToString(v.Value) == "" {
+			continue
+		}
 		if i == len(args)-1 {
 			queryParams += fmt.Sprintf("%s=%s", v.Name, cast.ToString(v.Value))
 		} else {
@@ -228,6 +232,9 @@ func (r *Request) DoUpload(ctx context.Context, fieldName string, filename strin
 	writer := multipart.NewWriter(payload)
 
 	part, err := writer.CreateFormFile(fieldName, filename)
+	if err != nil {
+		return Result{err: err}
+	}
 	_, err = io.Copy(part, bytes.NewReader(filedata))
 	if err != nil {
 		return Result{err: err}
@@ -341,7 +348,9 @@ func (r Result) Into(obj interface{}, isWarpHttpResponse bool) error {
 			message, _ := j.Get("message").String()
 			return fmt.Errorf(message)
 		}
-		marshalJSON, err = j.Get("data").MarshalJSON()
+		data := j.Get("data")
+		data.Del("@type") // 适配 grpc 存在的 @type 字段
+		marshalJSON, err = data.MarshalJSON()
 		if err != nil {
 			return err
 		}
@@ -352,8 +361,13 @@ func (r Result) Into(obj interface{}, isWarpHttpResponse bool) error {
 		}
 	}
 
-	jsonb := new(runtime.JSONPb)
-	err = jsonb.Unmarshal(marshalJSON, &obj)
+	switch obj.(type) {
+	case proto.Message:
+		err = protojson.Unmarshal([]byte(marshalJSON), obj.(proto.Message))
+	default:
+		err = json.Unmarshal(marshalJSON, &obj)
+	}
+
 	if err != nil {
 		return err
 	}
