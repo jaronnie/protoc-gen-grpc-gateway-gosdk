@@ -16,15 +16,16 @@ import (
 )
 
 var (
-	EnvFile                   string
-	GoVersion                 string
-	GoModule                  string
-	SdkDir                    string
-	ScopeVersion              string   // scopeVersion
-	ScopeVersions             []string // scopeVersions used for clientSet
-	GatewayPrefix             string   // microservice gateway prefix
-	IsWarpHttpResponse        bool     // is warped code, data, message
-	IsResourceExpansionUpdate bool     // is to update resource expansion
+	EnvFile            string
+	GoVersion          string
+	GoModule           string
+	SdkDir             string
+	ScopeVersion       string   // scopeVersion
+	ScopeVersions      []string // scopeVersions used for clientSet
+	GatewayPrefix      string   // microservice gateway prefix
+	IsWarpHttpResponse bool     // is warped code, data, message
+	// IsResourceExpansionUpdate bool     // is to update resource expansion
+	PluginOutputPath string // plugin output path
 
 	SpecifiedMethods []string // specified rpc methods
 
@@ -97,10 +98,15 @@ func bindFlag() {
 		false,
 		"isWarpHttpResponse",
 	)
-	pflag.BoolVar(&IsResourceExpansionUpdate,
-		"isResourceExpansionUpdate",
-		true,
-		"isResourceExpansionUpdate",
+	// pflag.BoolVar(&IsResourceExpansionUpdate,
+	// 	"isResourceExpansionUpdate",
+	// 	true,
+	// 	"isResourceExpansionUpdate",
+	// )
+	pflag.StringVar(&PluginOutputPath,
+		"pluginOutputPath",
+		".",
+		"set pluginOutputPath",
 	)
 	pflag.StringSliceVar(&SpecifiedMethods,
 		"specifiedMethods",

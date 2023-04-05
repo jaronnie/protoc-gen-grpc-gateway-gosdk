@@ -2,6 +2,8 @@ package gen
 
 import (
 	"fmt"
+	"os"
+	"path"
 	"path/filepath"
 
 	"github.com/golang/glog"
@@ -214,23 +216,25 @@ func (x *GenHttpSdk) GenResource(scopeResourceGws vars.ScopeResourceGateway) err
 	}
 
 	// gen scope expansion resource
-	if x.Env.IsResourceExpansionUpdate {
-		for scope, resources := range scopeResourceGws {
-			for resource, _ := range resources {
-				var scopeResourceExpansionFile *protogen.GeneratedFile
-				scopeResourceExpansionFile = x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/%s_expansion.go", scope, resource), "")
-				template, err := utilx.ParseTemplate(typed.ResourceExpansionData{
-					ScopeVersion: string(scope),
-					UpResource:   utilx.FirstUpper(string(resource)),
-				}, []byte(typed.ResourceExpansionTpl))
-				if err != nil {
-					glog.Errorf("generate resource expansion meet error. Err: [%v]", err)
-					return err
-				}
-				if _, err := scopeResourceExpansionFile.Write(template); err != nil {
-					return err
-				}
+	for scope, resources := range scopeResourceGws {
+		for resource, _ := range resources {
+			filepath := path.Join("typed", string(scope), string(resource)+"_expansion.go")
+			b, _ := os.ReadFile(path.Join(x.Env.PluginOutputPath, filepath))
+			if string(b) != "" {
+				continue
+			}
+			scopeResourceExpansionFile := x.Plugin.NewGeneratedFile(filepath, "")
 
+			template, err := utilx.ParseTemplate(typed.ResourceExpansionData{
+				ScopeVersion: string(scope),
+				UpResource:   utilx.FirstUpper(string(resource)),
+			}, []byte(typed.ResourceExpansionTpl))
+			if err != nil {
+				glog.Errorf("generate resource expansion meet error. Err: [%v]", err)
+				return err
+			}
+			if _, err := scopeResourceExpansionFile.Write(template); err != nil {
+				return err
 			}
 		}
 	}

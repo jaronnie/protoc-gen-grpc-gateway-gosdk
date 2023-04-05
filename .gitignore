@@ -3,3 +3,5 @@ tools/
 .fleet/
 
 dist/
+
+cmd/protoc-gen-go-httpsdk/protoc-gen-go-httpsdk

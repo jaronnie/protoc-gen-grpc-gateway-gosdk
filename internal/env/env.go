@@ -13,14 +13,15 @@ import (
 )
 
 type PluginEnv struct {
-	GoVersion                 string
-	GoModule                  string `validate:"required"`
-	SdkDir                    string
-	ScopeVersion              string   `validate:"required"` // scopeVersion
-	ScopeVersions             []string // scopeVersions used for clientSet
-	GatewayPrefix             string   // microservice gateway prefix
-	IsWarpHttpResponse        bool     // is warped code, data, message
-	IsResourceExpansionUpdate bool     // is to update resource expansion
+	GoVersion          string
+	GoModule           string `validate:"required"`
+	SdkDir             string
+	ScopeVersion       string   `validate:"required"` // scopeVersion
+	ScopeVersions      []string // scopeVersions used for clientSet
+	GatewayPrefix      string   // microservice gateway prefix
+	IsWarpHttpResponse bool     // is warped code, data, message
+	// IsResourceExpansionUpdate bool     // is to update resource expansion
+	PluginOutputPath string // plugin output path
 
 	SpecifiedMethods []string // specified rpc methods
 }
