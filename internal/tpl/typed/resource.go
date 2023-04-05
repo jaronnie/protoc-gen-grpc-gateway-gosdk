@@ -33,8 +33,8 @@ type {{.UpResource}}Getter interface {
 }
 
 type {{.UpResource}}Interface interface {
-	{{range $k, $v := .Gateways}}// {{.FuncName}} Implement: {{$v.Url}}
-	// Trans *{{.ProtoRequestBody.RootPath}}.{{.ProtoRequestBody.Name}} into *{{.HttpResponseBody.RootPath}}.{{.HttpResponseBody.Name}} {{.Comments}}
+	{{range $k, $v := .Gateways}}// {{.FuncName}} trans *{{.ProtoRequestBody.RootPath}}.{{.ProtoRequestBody.Name}} into *{{.HttpResponseBody.RootPath}}.{{.HttpResponseBody.Name}}
+	// API {{$v.Url}} {{.Comments}}
 	{{template "methodDefine" $v}}
 
 	{{end}}
