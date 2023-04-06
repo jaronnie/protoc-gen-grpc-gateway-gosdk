@@ -11,6 +11,7 @@ require (
 	github.com/golang/glog v1.0.0
 	github.com/google/go-cmp v0.5.9
 	github.com/pkg/errors v0.9.1
+	github.com/rinchsan/gosimports v0.3.8
 	github.com/samber/lo v1.38.1
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.13.0
@@ -39,7 +40,6 @@ require (
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.5 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/rinchsan/gosimports v0.3.8 // indirect
 	github.com/rogpeppe/go-internal v1.8.0 // indirect
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/spf13/afero v1.8.2 // indirect
