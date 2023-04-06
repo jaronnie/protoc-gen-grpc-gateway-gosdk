@@ -48,5 +48,6 @@ type Fake{{.UpResource}} struct {
 {{range $k, $v := .Gateways}}func (f *Fake{{$.UpResource}}) {{$v.FuncName}}({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}{{else}}ctx context.Context,{{end}}param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error) {
 	return FakeReturn{{$v.FuncName}}, nil
 }
+
 {{end}}
 `
