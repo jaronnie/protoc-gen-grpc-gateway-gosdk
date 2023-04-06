@@ -126,7 +126,7 @@ func bindFlag() {
 func (hs *HttpSdk) Generate(plugin *protogen.Plugin) (err error) {
 	if Debug {
 		// into debug mode, you can attach to this process
-		time.Sleep(time.Second * 20)
+		time.Sleep(time.Second * 10)
 	}
 
 	glog.V(1).Infof("get protoc go http sdk cmd flag logtostderr: [%v]", pflag.CommandLine.Lookup("logtostderr").Value)

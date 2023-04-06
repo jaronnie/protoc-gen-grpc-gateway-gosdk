@@ -6,8 +6,7 @@ type ResourceData struct {
 	Gateways []*vars.Gateway
 
 	IsWarpHttpResponse bool     // is warped code,data,message
-	GoModule           string   // github.com/jaronnie/autosdk
-	GoImportPaths      []string // pb import path [github.com/jaronnie/autosdk/pb/corev1]
+	GoImportPaths      []string // import path
 	ScopeVersion       string   // corev1
 	UpScopeVersion     string   // Corev1
 	Resource           string   // credential
@@ -20,12 +19,8 @@ var ResourceTpl = `
 package {{.ScopeVersion}}
 
 import (
-	"context"
-
 	{{range $v := .GoImportPaths | uniq}}"{{$v}}"
 	{{end}}
-	
-	"{{.GoModule}}/rest"
 )
 
 type {{.UpResource}}Getter interface {
@@ -81,5 +76,6 @@ func new{{.UpResource}}Client(c *{{.UpScopeVersion}}Client) *{{.Resource}}Client
 
 	return &resp, nil{{end}}
 }
+
 {{end}}
 `
