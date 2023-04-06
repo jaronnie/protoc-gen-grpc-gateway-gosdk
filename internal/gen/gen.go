@@ -294,7 +294,6 @@ func genScopeResource(plugin *protogen.Plugin, env *env.PluginEnv, scopeResource
 			// format template
 			templateFormat, err := gosimports.Process("", template, nil)
 			if err != nil {
-				glog.Errorf("go imports [%s]. Err: [%v]", scopeResourceFile, err)
 				return err
 			}
 

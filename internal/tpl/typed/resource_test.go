@@ -42,7 +42,6 @@ func TestGenerateResourceFile(t *testing.T) {
 			},
 		},
 		IsWarpHttpResponse: true,
-		GoModule:           "github.com/jaronnie/autosdk",
 		GoImportPaths:      []string{"github.com/jaronnie/autosdk/pb/corev1"},
 		ScopeVersion:       "corev1",
 		UpScopeVersion:     "Corev1",
