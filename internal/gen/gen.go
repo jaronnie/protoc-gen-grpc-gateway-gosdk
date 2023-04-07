@@ -47,7 +47,7 @@ func (x *GenHttpSdk) GenGoMod() error {
 func (x *GenHttpSdk) GenRestFrame() error {
 	restFiles := []string{"client.go", "option.go", "request.go"}
 	for _, v := range restFiles {
-		rf := x.Plugin.NewGeneratedFile("rest/"+v, "")
+		rf := x.Plugin.NewGeneratedFile(path.Join("rest", v), "")
 		switch v {
 		case "client.go":
 			// format template
@@ -114,7 +114,7 @@ func (x *GenHttpSdk) GenClientSet(scopeResourceGws vars.ScopeResourceGateway) er
 	}
 
 	// gen fake clientset
-	fakeClientSetFile := x.Plugin.NewGeneratedFile("fake/fake_clientset.go", "")
+	fakeClientSetFile := x.Plugin.NewGeneratedFile(path.Join("fake", "fake_clientset.go"), "")
 	template, err = utilx.ParseTemplate(fake.FakeClientSetData{
 		GoModule:      x.Env.GoModule,
 		ScopeVersions: scopeVersionsMap,
@@ -141,7 +141,7 @@ func (x *GenHttpSdk) GenScopeClient(scopeResourceGws vars.ScopeResourceGateway) 
 	resources := gateway.GetAllUpResources(scopeResourceGws)
 
 	// gen direct client file
-	directClientFile := x.Plugin.NewGeneratedFile("typed/direct_client.go", "")
+	directClientFile := x.Plugin.NewGeneratedFile(path.Join("typed", "direct_client.go"), "")
 	template, err := utilx.ParseTemplate(typed.DirectClientData{
 		GoModule: x.Env.GoModule,
 	}, []byte(typed.DirectClientTpl))
@@ -161,7 +161,7 @@ func (x *GenHttpSdk) GenScopeClient(scopeResourceGws vars.ScopeResourceGateway) 
 	}
 
 	// gen fake direct client file
-	fakeDirectClientFile := x.Plugin.NewGeneratedFile("typed/fake/fake_direct_client.go", "")
+	fakeDirectClientFile := x.Plugin.NewGeneratedFile(path.Join("typed", "fake", "fake_direct_client.go"), "")
 	template, err = utilx.ParseTemplate(typed.DirectClientData{
 		GoModule: x.Env.GoModule,
 	}, []byte(typedfake.FakeDirectClientTpl))
@@ -182,8 +182,7 @@ func (x *GenHttpSdk) GenScopeClient(scopeResourceGws vars.ScopeResourceGateway) 
 
 	// gen scope client file
 	for k, v := range scopeVersionsMap {
-		scopeClientFile := x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/%s_client.go",
-			k, k), "")
+		scopeClientFile := x.Plugin.NewGeneratedFile(path.Join("typed", k, k+"_client.go"), "")
 		template, err = utilx.ParseTemplate(typed.ScopeClientData{
 			ScopeVersion:   k,
 			UpScopeVersion: v,
@@ -209,8 +208,7 @@ func (x *GenHttpSdk) GenScopeClient(scopeResourceGws vars.ScopeResourceGateway) 
 
 	// gen fake scope client file
 	for k, v := range scopeVersionsMap {
-		fakeScopeClientFile := x.Plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/fake/fake_%s_client.go",
-			k, k), "")
+		fakeScopeClientFile := x.Plugin.NewGeneratedFile(path.Join("typed", k, "fake", "fake_"+k+"_client.go"), "")
 		template, err = utilx.ParseTemplate(typedfake.FakeScopeClientData{
 			ScopeVersion:   k,
 			UpScopeVersion: v,
@@ -276,7 +274,7 @@ func genScopeResource(plugin *protogen.Plugin, env *env.PluginEnv, scopeResource
 			// import rest frame
 			goImportPaths = append(goImportPaths, fmt.Sprintf("%s/rest", env.GoModule))
 
-			scopeResourceFile = plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/%s.go", scope, resource), "")
+			scopeResourceFile = plugin.NewGeneratedFile(path.Join("typed", string(scope), string(resource)+".go"), "")
 			template, err := utilx.ParseTemplate(typed.ResourceData{
 				Gateways:           gws,
 				IsWarpHttpResponse: env.IsWarpHttpResponse,
@@ -352,7 +350,8 @@ func genScopeFakeResource(plugin *protogen.Plugin, env *env.PluginEnv, scopeReso
 			}
 			// remove duplicate
 			goImportPaths = utilx.RemoveDuplicateElement(goImportPaths)
-			fakeScopeResourceFile = plugin.NewGeneratedFile(fmt.Sprintf("typed/%s/fake/fake_%s.go", scope, resource), "")
+
+			fakeScopeResourceFile = plugin.NewGeneratedFile(path.Join("typed", string(scope), "fake", "fake_"+string(resource)+".go"), "")
 			template, err := utilx.ParseTemplate(typedfake.FakeResourceData{
 				Gateways:           gws,
 				IsWarpHttpResponse: env.IsWarpHttpResponse,
