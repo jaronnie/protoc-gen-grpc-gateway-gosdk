@@ -156,7 +156,7 @@ func (x *GenHttpSdk) GenScopeClient(scopeResourceGws vars.ScopeResourceGateway) 
 		return err
 	}
 
-	if _, err = directClientFile.Write(template); err != nil {
+	if _, err = directClientFile.Write(templateFormat); err != nil {
 		return err
 	}
 
@@ -309,7 +309,7 @@ func genScopeResource(plugin *protogen.Plugin, env *env.PluginEnv, scopeResource
 func genScopeResourceExpansion(plugin *protogen.Plugin, env *env.PluginEnv, scopeResourceGws vars.ScopeResourceGateway) error {
 	// gen scope expansion resource
 	for scope, resources := range scopeResourceGws {
-		for resource, _ := range resources {
+		for resource := range resources {
 			filepath := path.Join("typed", string(scope), string(resource)+"_expansion.go")
 			b, _ := os.ReadFile(path.Join(env.PluginOutputPath, filepath))
 			if string(b) != "" {
