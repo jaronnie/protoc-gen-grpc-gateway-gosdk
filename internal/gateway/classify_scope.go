@@ -9,7 +9,7 @@ import (
 func GetAllScopeVersionsMap(scopeResourceGws vars.ScopeResourceGateway) map[string]string {
 	scopeVersionMap := make(map[string]string, 0)
 
-	for k, _ := range scopeResourceGws {
+	for k := range scopeResourceGws {
 		scopeVersionMap[string(k)] = utilx.FirstUpper(string(k))
 	}
 	return scopeVersionMap

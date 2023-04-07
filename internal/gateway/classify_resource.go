@@ -59,7 +59,7 @@ func getResourceByUri(uri string) (vars.Resource, error) {
 func GetAllUpResources(scopeResourceGws vars.ScopeResourceGateway) []string {
 	var resources []string
 	for _, resourceMap := range scopeResourceGws {
-		for resource, _ := range resourceMap {
+		for resource := range resourceMap {
 			resources = append(resources, utilx.FirstUpper(string(resource)))
 		}
 	}

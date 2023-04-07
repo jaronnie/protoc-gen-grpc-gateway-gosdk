@@ -12,5 +12,9 @@ func BeautifyJson(v interface{}) (string, error) {
 	}
 	var out bytes.Buffer
 	err = json.Indent(&out, uglyBody, "", "\t")
+	if err != nil {
+		return "", err
+	}
+
 	return out.String(), nil
 }
