@@ -34,6 +34,8 @@ var (
 
 type {{.UpResource}}Getter interface {
 	{{.UpResource}}() {{.UpResource}}Interface
+
+	Fake{{.UpResource}}Expansion
 }
 
 type {{.UpResource}}Interface interface {

@@ -254,6 +254,11 @@ func (x *GenHttpSdk) GenResource(scopeResourceGws vars.ScopeResourceGateway) err
 	if err := genScopeFakeResource(x.Plugin, x.Env, scopeResourceGws); err != nil {
 		return err
 	}
+
+	if err := genScopeFakeResourceExpansion(x.Plugin, x.Env, scopeResourceGws); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -316,12 +321,12 @@ func genScopeResourceExpansion(plugin *protogen.Plugin, env *env.PluginEnv, scop
 	// gen scope expansion resource
 	for scope, resources := range scopeResourceGws {
 		for resource := range resources {
-			filepath := path.Join("typed", string(scope), string(resource)+"_expansion.go")
-			b, _ := os.ReadFile(path.Join(env.PluginOutputPath, filepath))
+			file := path.Join("typed", string(scope), string(resource)+"_expansion.go")
+			b, _ := os.ReadFile(path.Join(env.PluginOutputPath, file))
 			if string(b) != "" {
 				continue
 			}
-			scopeResourceExpansionFile := plugin.NewGeneratedFile(filepath, "")
+			scopeResourceExpansionFile := plugin.NewGeneratedFile(file, "")
 
 			template, err := utilx.ParseTemplate(typed.ResourceExpansionData{
 				ScopeVersion: string(scope),
@@ -335,7 +340,6 @@ func genScopeResourceExpansion(plugin *protogen.Plugin, env *env.PluginEnv, scop
 			// format template
 			templateFormat, err := gosimports.Process("", template, nil)
 			if err != nil {
-				glog.Errorf("go imports [%s]. Err: [%v]", filepath, err)
 				return err
 			}
 
@@ -382,6 +386,40 @@ func genScopeFakeResource(plugin *protogen.Plugin, env *env.PluginEnv, scopeReso
 			}
 
 			if _, err := fakeScopeResourceFile.Write(templateFormat); err != nil {
+				return err
+			}
+
+		}
+	}
+	return nil
+}
+
+func genScopeFakeResourceExpansion(plugin *protogen.Plugin, env *env.PluginEnv, scopeResourceGws vars.ScopeResourceGateway) error {
+	// gen fake scope resource expansion
+	for scope, resources := range scopeResourceGws {
+		for resource := range resources {
+			file := path.Join("typed", string(scope), "fake", "fake_"+string(resource)+"_expansion.go")
+			b, _ := os.ReadFile(path.Join(env.PluginOutputPath, file))
+			if string(b) != "" {
+				continue
+			}
+
+			fakeScopeResourceExpansionFile := plugin.NewGeneratedFile(file, "")
+			template, err := utilx.ParseTemplate(typedfake.FakeResourceExpansionData{
+				UpResource: utilx.FirstUpper(string(resource)),
+			}, []byte(typedfake.FakeResourceExpansionTpl))
+			if err != nil {
+				glog.Errorf("generate fake resource expansion meet error. Err: [%v]", err)
+				return err
+			}
+
+			// format template
+			templateFormat, err := gosimports.Process("", template, nil)
+			if err != nil {
+				return err
+			}
+
+			if _, err := fakeScopeResourceExpansionFile.Write(templateFormat); err != nil {
 				return err
 			}
 

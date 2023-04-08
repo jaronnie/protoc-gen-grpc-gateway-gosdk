@@ -13,6 +13,8 @@ var (
 
 type MachineGetter interface {
 	Machine() MachineInterface
+
+	FakeMachineExpansion
 }
 
 type MachineInterface interface {

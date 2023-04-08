@@ -14,6 +14,8 @@ var (
 
 type CredentialGetter interface {
 	Credential() CredentialInterface
+
+	FakeCredentialExpansion
 }
 
 type CredentialInterface interface {
