@@ -5,6 +5,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strings"
 
 	"github.com/golang/glog"
 	"github.com/rinchsan/gosimports"
@@ -91,11 +92,18 @@ func (x *GenHttpSdk) GenClientSet(scopeResourceGws vars.ScopeResourceGateway) er
 		}
 	}
 
+	// 适配仓如 core-go
+	rootModule := filepath.Base(x.Env.GoModule)
+	if strings.Contains(rootModule, "-") {
+		s := strings.Split(rootModule, "-")
+		rootModule = s[0] + "sdk"
+	}
+
 	// gen clientset
 	clientSetFile := x.Plugin.NewGeneratedFile("clientset.go", "")
 	template, err := utilx.ParseTemplate(tpl.ClientSetData{
 		GoModule:      x.Env.GoModule,
-		RootModule:    filepath.Base(x.Env.GoModule),
+		RootModule:    rootModule,
 		ScopeVersions: scopeVersionsMap,
 	}, []byte(tpl.ClientSetTpl))
 	if err != nil {
