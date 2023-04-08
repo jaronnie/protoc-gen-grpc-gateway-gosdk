@@ -61,3 +61,10 @@ func WithGatewayPrefix(prefix string) Opt {
 		return nil
 	}
 }
+
+func WithDisableGateway() Opt {
+	return func(c *RESTClient) error {
+		c.disableGateway = true
+		return nil
+	}
+}

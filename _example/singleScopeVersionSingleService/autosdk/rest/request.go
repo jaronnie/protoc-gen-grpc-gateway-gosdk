@@ -64,6 +64,12 @@ func (r *Request) SubPath(subPath string, args ...PathParam) *Request {
 		subPath = strings.ReplaceAll(subPath, "{"+v.Name+"}", cast.ToString(v.Value))
 	}
 	r.subPath = r.c.gatewayPrefix + subPath
+
+	if r.c.disableGateway {
+		i := strings.Index(r.subPath, "/api")
+		r.subPath = r.subPath[i:]
+	}
+
 	return r
 }
 
@@ -153,7 +159,7 @@ type Result struct {
 // processing.
 //
 // Error type:
-//   - http.Client.Do errors are returned directly.
+// http.Client.Do errors are returned directly.
 func (r *Request) Do(ctx context.Context) Result {
 	url, err := r.defaultUrl()
 	if err != nil {
@@ -173,10 +179,6 @@ func (r *Request) Do(ctx context.Context) Result {
 
 	if r.c.retryTimes == 0 {
 		r.c.retryTimes = 1
-	}
-
-	if r.c.retryDelay == 0 {
-		r.c.retryDelay = time.Duration(1) * time.Second
 	}
 
 	var rawResp *http.Response
@@ -258,10 +260,6 @@ func (r *Request) DoUpload(ctx context.Context, fieldName string, filename strin
 
 	if r.c.retryTimes == 0 {
 		r.c.retryTimes = 1
-	}
-
-	if r.c.retryDelay == 0 {
-		r.c.retryDelay = time.Duration(1) * time.Second
 	}
 
 	var rawResp *http.Response
@@ -401,10 +399,6 @@ func (r *Request) Stream(ctx context.Context) (io.ReadCloser, error) {
 
 	if r.c.retryTimes == 0 {
 		r.c.retryTimes = 1
-	}
-
-	if r.c.retryDelay == 0 {
-		r.c.retryDelay = time.Duration(1) * time.Second
 	}
 
 	var rawResp *http.Response

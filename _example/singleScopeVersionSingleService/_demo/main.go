@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/jaronnie/autosdk"
 	"github.com/jaronnie/autosdk/pb/corev1"
@@ -20,6 +21,9 @@ func main() {
 			"Content-Type": {"application/json"},
 		}),
 		rest.WithGatewayPrefix("/gateway"),
+		rest.WithDisableGateway(),
+		rest.WithRetryTimes(3),
+		rest.WithRetryDelay(time.Duration(1)*time.Second),
 	)
 
 	if err != nil {
