@@ -32,6 +32,7 @@ func RegisterFuncMap() template.FuncMap {
 }
 
 var registerFuncMap = map[string]interface{}{
-	"firstUpper": FirstUpper,
-	"firstLower": FirstLower,
+	"firstUpper":           FirstUpper,
+	"firstLower":           FirstLower,
+	"getProtoToolsVersion": getProtoToolsVersion,
 }

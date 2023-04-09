@@ -46,6 +46,9 @@ func main() {
 
 	if len(os.Args) == 2 {
 		if os.Args[1] == "version" {
+			if commit != "" {
+				commit = commit[:6]
+			}
 			fmt.Printf("%s-%s\n", version, commit)
 			return
 		}

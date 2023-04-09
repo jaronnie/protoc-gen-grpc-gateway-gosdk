@@ -51,8 +51,13 @@ func (x *GenHttpSdk) GenRestFrame() error {
 		rf := x.Plugin.NewGeneratedFile(path.Join("rest", v), "")
 		switch v {
 		case "client.go":
+			template, err := utilx.ParseTemplate(nil, []byte(rest.ClientTpl))
+			if err != nil {
+				glog.Errorf("generate rest frame client meet error. Err: [%v]", err)
+				return err
+			}
 			// format template
-			templateFormat, err := gosimports.Process("", []byte(rest.ClientTpl), nil)
+			templateFormat, err := gosimports.Process("", template, nil)
 			if err != nil {
 				return err
 			}
@@ -60,8 +65,13 @@ func (x *GenHttpSdk) GenRestFrame() error {
 				return err
 			}
 		case "option.go":
+			template, err := utilx.ParseTemplate(nil, []byte(rest.OptionTpl))
+			if err != nil {
+				glog.Errorf("generate rest frame option meet error. Err: [%v]", err)
+				return err
+			}
 			// format template
-			templateFormat, err := gosimports.Process("", []byte(rest.OptionTpl), nil)
+			templateFormat, err := gosimports.Process("", template, nil)
 			if err != nil {
 				return err
 			}
@@ -69,8 +79,13 @@ func (x *GenHttpSdk) GenRestFrame() error {
 				return err
 			}
 		case "request.go":
+			template, err := utilx.ParseTemplate(nil, []byte(rest.RequestTpl))
+			if err != nil {
+				glog.Errorf("generate rest frame request meet error. Err: [%v]", err)
+				return err
+			}
 			// format template
-			templateFormat, err := gosimports.Process("", []byte(rest.RequestTpl), nil)
+			templateFormat, err := gosimports.Process("", template, nil)
 			if err != nil {
 				return err
 			}
