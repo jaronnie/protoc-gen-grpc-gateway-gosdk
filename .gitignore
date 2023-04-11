@@ -5,3 +5,6 @@ tools/
 dist/
 
 cmd/protoc-gen-go-httpsdk/protoc-gen-go-httpsdk
+
+.history
+node_modules

@@ -1,0 +1,31 @@
+{
+  "name": "protoc-gen-go-httpsdk-docs",
+  "version": "1.0.6",
+  "description": "protoc-gen-go-httpsdk-docs",
+  "author": "jaron@jaronnie.com",
+  "main": "index.js",
+  "keywords": [
+    "theme",
+    "template",
+    "plugin",
+    "vuepress"
+  ],
+  "homepage": "https://github.com/jaronnie/protoc-gen-go-httpsdk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaronnie/protoc-gen-go-httpsdk.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "devDependencies": {
+    "@vuepress/plugin-back-to-top": "^1.7.1",
+    "vuepress": "^1.7.1",
+    "vuepress-plugin-qrcode": "^1.0.7"
+  },
+  "dependencies": {
+    "vue-template-compiler": "^2.7.14"
+  }
+}
