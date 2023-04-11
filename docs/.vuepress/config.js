@@ -2,7 +2,7 @@ module.exports = {
   head: [
     [
         'link', // 设置 favicon.ico
-        { rel: 'icon', href: 'favicon-protoc-gen-go-httpsdk.ico' }
+        { rel: 'icon', href: 'favicon.ico' }
     ]
 ],
   base: '/',
