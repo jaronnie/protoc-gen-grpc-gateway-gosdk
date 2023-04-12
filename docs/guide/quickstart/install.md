@@ -9,3 +9,7 @@ go install github.com/jaronnie/protoc-gen-go-httpsdk@latest
 ```
 
 ## github release
+
+[download](https://github.com/jaronnie/protoc-gen-go-httpsdk/releases/latest)
+
+then move it to $PATH
