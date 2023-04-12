@@ -28,24 +28,24 @@ module.exports = {
     logo: 'https://oss.jaronnie.com/logo.jpeg',
     locales: {
       '/': {
-       // 多语言下拉菜单的标题
-       selectText: '选择语言',
-       // 该语言在下拉菜单中的标签
-       label: '简体中文',
-       // Service Worker 的配置
-       serviceWorker: {
-         updatePopup: {
-           message: "发现新内容可用.",
-           buttonText: "刷新"
-         }
-       },
-       // 当前 locale 的 algolia docsearch 选项
-       algolia: {},
-       nav: [
-         { text: 'Github', link: 'https://github.com/jaronnie/protoc-gen-go-httpsdk' },
-       ],
-       sidebar: {
-         '/guide/': [
+        // 多语言下拉菜单的标题
+        selectText: '选择语言',
+        // 该语言在下拉菜单中的标签
+        label: '简体中文',
+        // Service Worker 的配置
+        serviceWorker: {
+          updatePopup: {
+            message: "发现新内容可用.",
+            buttonText: "刷新"
+          } 
+        },
+        // 当前 locale 的 algolia docsearch 选项
+        algolia: {},
+        nav: [
+          { text: 'Github', link: 'https://github.com/jaronnie/protoc-gen-go-httpsdk' },
+        ],
+        sidebar: {
+          '/guide/': [
           {
             title: '1. Introduction',
             collapsable: false,
@@ -61,8 +61,8 @@ module.exports = {
               { title: '2.1 下载 protoc-gen-go-httpsdk', path: '/guide/quickstart/install' },
             ]
           },
-         ],
-       }
+          ],
+        }
       },
     }
   },
