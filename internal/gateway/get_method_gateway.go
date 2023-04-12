@@ -1,7 +1,6 @@
 package gateway
 
 import (
-	"fmt"
 	"path/filepath"
 	"strings"
 
@@ -65,10 +64,7 @@ func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, er
 	queryParams := parse.CreateQueryParams(m)
 
 	if env.GatewayPrefix != "" {
-		// get scope
-		index := strings.LastIndex(env.ScopeVersion, "v")
-		scope := env.ScopeVersion[:index]
-		url = fmt.Sprintf("%s/%s%s", env.GatewayPrefix, scope, url)
+		url = env.GatewayPrefix + url
 	}
 
 	//  protoRequestBody's fields
