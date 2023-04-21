@@ -59,6 +59,7 @@ module.exports = {
             collapsable: false,
             children: [
               { title: '2.1 下载 protoc-gen-grpc-gateway-gosdk', path: '/guide/quickstart/install' },
+              { title: '2.2 grpc-restful 项目生成 gosdk', path: '/guide/quickstart/grpc-restful' },
             ]
           },
           ],
