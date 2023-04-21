@@ -17,7 +17,7 @@ func Generate(plugin *protogen.Plugin) error {
 	if err != nil {
 		return err
 	}
-	marshalEnv, _ := utilx.BeautifyJson(pluginEnv)
+	marshalEnv, _ := utilx.BeautifyJSON(pluginEnv)
 	glog.V(1).Infof("get plugin env [%v]", marshalEnv)
 
 	// get scope service gateway
@@ -45,7 +45,7 @@ func Generate(plugin *protogen.Plugin) error {
 		}
 	}
 
-	marshalScopeResourceGws, err := utilx.BeautifyJson(scopeResourceGws)
+	marshalScopeResourceGws, err := utilx.BeautifyJSON(scopeResourceGws)
 	if err != nil {
 		glog.Errorf("marshal scope resource gateways meet error. Err: [%v]", err)
 	}
@@ -55,10 +55,10 @@ func Generate(plugin *protogen.Plugin) error {
 		return err
 	}
 
-	marshalScopeResourceGws, _ = utilx.BeautifyJson(scopeResourceGws)
+	marshalScopeResourceGws, _ = utilx.BeautifyJSON(scopeResourceGws)
 	glog.V(1).Infof("after classify scope service gateway get scope service gateway: [%s]", marshalScopeResourceGws)
 
-	ghs := gen.GenHttpSdk{Plugin: plugin, Env: pluginEnv}
+	ghs := gen.HTTPSdk{Plugin: plugin, Env: pluginEnv}
 
 	if pluginEnv.IsNeedGenerateGoMod() {
 		// generate sdk go mod file

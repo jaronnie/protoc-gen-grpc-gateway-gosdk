@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 )
 
-func BeautifyJson(v interface{}) (string, error) {
+func BeautifyJSON(v interface{}) (string, error) {
 	uglyBody, err := json.Marshal(v)
 	if err != nil {
 		return "", err

@@ -19,7 +19,7 @@ type PluginEnv struct {
 	ScopeVersion       string   `validate:"required"` // scopeVersion
 	ScopeVersions      []string // scopeVersions used for clientSet
 	GatewayPrefix      string   // microservice gateway prefix
-	IsWarpHttpResponse bool     // is warped code, data, message
+	IsWarpHTTPResponse bool     // is warped code, data, message
 	// IsResourceExpansionUpdate bool     // is to update resource expansion
 	PluginOutputPath string // plugin output path
 

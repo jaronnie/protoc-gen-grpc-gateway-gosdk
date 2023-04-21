@@ -23,7 +23,7 @@ var (
 	ScopeVersion       string   // scopeVersion
 	ScopeVersions      []string // scopeVersions used for clientSet
 	GatewayPrefix      string   // microservice gateway prefix
-	IsWarpHttpResponse bool     // is warped code, data, message
+	IsWarpHTTPResponse bool     // is warped code, data, message
 	PluginOutputPath   string   // plugin output path
 	SpecifiedMethods   []string // specified rpc methods
 	Debug              bool     // used to debug
@@ -34,7 +34,7 @@ var (
 	commit  string
 )
 
-type HttpSdk struct{}
+type HTTPSdk struct{}
 
 func main() {
 	pflag.Usage = func() {
@@ -53,7 +53,7 @@ func main() {
 
 	bindFlag()
 
-	hs := HttpSdk{}
+	hs := HTTPSdk{}
 	protogen.Options{
 		ParamFunc: pflag.CommandLine.Set,
 	}.Run(hs.Generate)
@@ -93,8 +93,8 @@ func bindFlag() {
 		"",
 		"set gateway prefix",
 	)
-	pflag.BoolVar(&IsWarpHttpResponse,
-		"isWarpHttpResponse",
+	pflag.BoolVar(&IsWarpHTTPResponse,
+		"isWarpHTTPResponse",
 		false,
 		"isWarpHttpResponse",
 	)
@@ -118,7 +118,7 @@ func bindFlag() {
 	pflag.Parse()
 }
 
-func (hs *HttpSdk) Generate(plugin *protogen.Plugin) (err error) {
+func (hs *HTTPSdk) Generate(plugin *protogen.Plugin) (err error) {
 	if Debug {
 		// into debug mode, you can attach to this process
 		time.Sleep(time.Second * 10)

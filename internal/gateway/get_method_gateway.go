@@ -16,7 +16,6 @@ import (
 )
 
 func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, error) {
-
 	if m.Desc.IsStreamingClient() && m.Desc.IsStreamingServer() {
 		return nil, nil
 	}
@@ -56,7 +55,7 @@ func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, er
 		return nil, nil
 	}
 
-	pathParams, err := parse.ParsePathParam(url)
+	pathParams, err := parse.PathParam(url)
 	if err != nil {
 		return nil, nil
 	}
@@ -108,11 +107,11 @@ func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, er
 			GoImportPath: env.GoModule + "/pb" + strings.TrimLeft(string(m.Input.GoIdent.GoImportPath), "."),
 			RootPath:     filepath.Base(env.GoModule + strings.TrimLeft(string(m.Input.GoIdent.GoImportPath), ".")),
 		},
-		HttpRequestBody: vars.HttpRequestBody{
+		HTTPRequestBody: vars.HTTPRequestBody{
 			BodyName:   httpRuleBodyName,
 			GoBodyName: httpRuleBodyGoName,
 		},
-		HttpResponseBody: vars.HttpResponseBody{
+		HTTPResponseBody: vars.HTTPResponseBody{
 			Name:         m.Output.GoIdent.GoName,
 			GoImportPath: env.GoModule + "/pb" + strings.TrimLeft(string(m.Output.GoIdent.GoImportPath), "."),
 			RootPath:     filepath.Base(env.GoModule + strings.TrimLeft(string(m.Output.GoIdent.GoImportPath), ".")),
@@ -122,8 +121,8 @@ func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, er
 		ProtoServiceName: string(m.Parent.Desc.Name()),
 		FuncName:         m.GoName,
 		Comments:         comments,
-		HttpMethod:       httpMethod,
-		Url:              url,
+		HTTPMethod:       httpMethod,
+		URL:              url,
 		PathParams:       pathParams,
 		QueryParams:      queryParams,
 		IsSpecified:      isSpecified,

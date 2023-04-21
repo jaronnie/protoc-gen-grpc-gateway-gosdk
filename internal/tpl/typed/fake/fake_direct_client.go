@@ -1,6 +1,6 @@
 package fake
 
-type FakeDirectClientData struct {
+type DirectClientData struct {
 	GoModule string // github.com/jaronnie/autosdk
 }
 

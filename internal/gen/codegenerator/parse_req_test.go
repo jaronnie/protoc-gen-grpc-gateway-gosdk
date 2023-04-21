@@ -63,8 +63,7 @@ func mustGetReader(pb proto.Message) io.Reader {
 	return bytes.NewBuffer(b)
 }
 
-type invalidReader struct {
-}
+type invalidReader struct{}
 
 func (*invalidReader) Read(p []byte) (int, error) {
 	return 0, fmt.Errorf("invalid reader")

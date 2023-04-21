@@ -10,16 +10,16 @@ type ServiceGateway map[Resource][]*Gateway
 
 type Gateway struct {
 	ProtoRequestBody ProtoRequestBody
-	HttpRequestBody  HttpRequestBody
-	HttpResponseBody HttpResponseBody
+	HTTPRequestBody  HTTPRequestBody
+	HTTPResponseBody HTTPResponseBody
 
 	IsStreamClient   bool // is stream client
 	IsStreamServer   bool // is stream server
 	ProtoServiceName string
 	FuncName         string
 	Comments         string
-	HttpMethod       string
-	Url              string
+	HTTPMethod       string
+	URL              string
 	PathParams       []*PathParam
 	QueryParams      []*QueryParam
 
@@ -32,12 +32,12 @@ type ProtoRequestBody struct {
 	RootPath     string // corev1
 }
 
-type HttpRequestBody struct {
+type HTTPRequestBody struct {
 	BodyName   string // * or others
 	GoBodyName string
 }
 
-type HttpResponseBody struct {
+type HTTPResponseBody struct {
 	Name         string
 	GoImportPath string
 	RootPath     string

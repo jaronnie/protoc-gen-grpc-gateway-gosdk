@@ -1,6 +1,6 @@
 package fake
 
-type FakeScopeClientData struct {
+type ScopeClientData struct {
 	GoModule       string   // github.com/jaronnie/autosdk
 	ScopeVersion   string   // corev1
 	UpScopeVersion string   // Corev1

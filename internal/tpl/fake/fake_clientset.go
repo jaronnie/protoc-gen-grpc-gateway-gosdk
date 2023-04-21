@@ -1,7 +1,7 @@
 package fake
 
-type FakeClientSetData struct {
-	GoModule      string            //github.com/jaronnie/autosdk
+type ClientSetData struct {
+	GoModule      string            // github.com/jaronnie/autosdk
 	ScopeVersions map[string]string // ["corev1":"CoreV1", "oauthv1":"OauthV1"]
 }
 

@@ -16,7 +16,7 @@ func getProtoToolsVersion(t string) (string, error) {
 	case "protoc-gen-go":
 		return getProtocGenGoVersion()
 	case "protoc-gen-grpc-gateway-go":
-		return getProtocGenGoHttpSdkVersion()
+		return getProtocGenGRPCGatewayVersion()
 	}
 	return "", nil
 }
@@ -45,7 +45,7 @@ func getProtocGenGoVersion() (string, error) {
 	return "", nil
 }
 
-func getProtocGenGoHttpSdkVersion() (string, error) {
+func getProtocGenGRPCGatewayVersion() (string, error) {
 	version, err := execx.Run("protoc-gen-grpc-gateway-go version", "")
 	if err != nil {
 		return "", err

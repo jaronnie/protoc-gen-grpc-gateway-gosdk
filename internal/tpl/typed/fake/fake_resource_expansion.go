@@ -1,6 +1,6 @@
 package fake
 
-type FakeResourceExpansionData struct {
+type ResourceExpansionData struct {
 	UpResource string // Credential
 }
 

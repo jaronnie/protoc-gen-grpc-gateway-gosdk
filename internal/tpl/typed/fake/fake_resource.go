@@ -2,10 +2,10 @@ package fake
 
 import "github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/vars"
 
-type FakeResourceData struct {
+type ResourceData struct {
 	Gateways []*vars.Gateway
 
-	IsWarpHttpResponse bool     // is warped code,data,message
+	IsWarpHTTPResponse bool     // is warped code,data,message
 	GoModule           string   // github.com/jaronnie/autosdk
 	GoImportPaths      []string // pb import path [github.com/jaronnie/autosdk/pb/corev1]
 	ScopeVersion       string   // corev1
@@ -32,7 +32,7 @@ import (
 )
 
 var (
-	{{range $k, $v := .Gateways}}FakeReturn{{$v.FuncName}} = &{{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}rest.Request{}{{else}}{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{}{{end}}
+	{{range $k, $v := .Gateways}}FakeReturn{{$v.FuncName}} = &{{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}rest.Request{}{{else}}{{$v.HTTPResponseBody.RootPath}}.{{$v.HTTPResponseBody.Name}}{}{{end}}
 	{{end}}
 )
 
@@ -43,7 +43,7 @@ type {{.UpResource}}Getter interface {
 }
 
 type {{.UpResource}}Interface interface {
-	{{range $k, $v := .Gateways}}{{$v.FuncName}}({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}{{else}}ctx context.Context,{{end}} param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error)
+	{{range $k, $v := .Gateways}}{{$v.FuncName}}({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}{{else}}ctx context.Context,{{end}} param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}*rest.Request{{else}}*{{$v.HTTPResponseBody.RootPath}}.{{$v.HTTPResponseBody.Name}}{{end}}, error)
 	{{end}}
 }
 
@@ -51,7 +51,7 @@ type Fake{{.UpResource}} struct {
 	Fake *Fake{{.UpScopeVersion}}
 }
 
-{{range $k, $v := .Gateways}}func (f *Fake{{$.UpResource}}) {{$v.FuncName}}({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}{{else}}ctx context.Context,{{end}}param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}*rest.Request{{else}}*{{$v.HttpResponseBody.RootPath}}.{{$v.HttpResponseBody.Name}}{{end}}, error) {
+{{range $k, $v := .Gateways}}func (f *Fake{{$.UpResource}}) {{$v.FuncName}}({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}{{else}}ctx context.Context,{{end}}param *{{$v.ProtoRequestBody.RootPath}}.{{$v.ProtoRequestBody.Name}}) ({{if or $v.IsStreamServer $v.IsStreamClient $v.IsSpecified}}*rest.Request{{else}}*{{$v.HTTPResponseBody.RootPath}}.{{$v.HTTPResponseBody.Name}}{{end}}, error) {
 	return FakeReturn{{$v.FuncName}}, nil
 }
 

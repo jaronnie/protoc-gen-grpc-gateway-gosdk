@@ -21,7 +21,7 @@ func ClassifyResource(scopeResourceGws vars.ScopeResourceGateway) error {
 				serviceGws := make(vars.ServiceGateway, 0)
 				for _, gw := range gws {
 					serviceName = gw.ProtoServiceName
-					resource, err := getResourceByUri(gw.Url)
+					resource, err := getResourceByURI(gw.URL)
 					if err != nil {
 						return err
 					}
@@ -45,7 +45,7 @@ func ClassifyResource(scopeResourceGws vars.ScopeResourceGateway) error {
 	return nil
 }
 
-func getResourceByUri(uri string) (vars.Resource, error) {
+func getResourceByURI(uri string) (vars.Resource, error) {
 	resourceReg := regexp.MustCompile(`/api/v\d{1,3}(.\d+){0,2}/.*`)
 
 	findString := resourceReg.FindString(uri)

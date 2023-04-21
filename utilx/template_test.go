@@ -42,7 +42,6 @@ func TestParseTemplateWithAny(t *testing.T) {
 			All:  []string{"abc", "abc", "ABC", "Abc", "ABc"},
 			Test: []string{"abc"},
 		}, []byte(TestAny))
-
 		if err != nil {
 			fmt.Println(err)
 			return

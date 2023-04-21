@@ -23,8 +23,8 @@ func TestGetProtocGenGoVersion(t *testing.T) {
 	fmt.Println(s)
 }
 
-func TestGetProtocGenGoHttpSdkVersion(t *testing.T) {
-	s, err := getProtocGenGoHttpSdkVersion()
+func TestGetProtocGenGRPCGatewayVersion(t *testing.T) {
+	s, err := getProtocGenGRPCGatewayVersion()
 	if err != nil {
 		fmt.Println(err)
 		return

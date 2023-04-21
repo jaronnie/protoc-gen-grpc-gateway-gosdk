@@ -1,0 +1,11 @@
+run:
+  go: '1.18'
+linters:
+  skip-dirs:
+    - _example
+  enable:
+    - errcheck
+    - goimports
+    - golint
+    - govet
+    - staticcheck

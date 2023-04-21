@@ -20,7 +20,7 @@ func toCamelCase(str string) string {
 	})
 }
 
-func ParsePathParam(pattern string) ([]*vars.PathParam, error) {
+func PathParam(pattern string) ([]*vars.PathParam, error) {
 	if !strings.HasPrefix(pattern, "/") {
 		return nil, fmt.Errorf("no leading /")
 	}
@@ -64,7 +64,7 @@ func CreateQueryParams(method *protogen.Method) []*vars.QueryParam {
 		for _, field := range fields {
 			if field.Desc.Kind() == protoreflect.MessageKind {
 				q := &vars.QueryParam{
-					//Field:  field,
+					// Field:  field,
 					GoName: fmt.Sprintf("%s.", field.GoName),
 					Name:   fmt.Sprintf("%s.", field.Desc.Name()),
 				}
@@ -72,7 +72,7 @@ func CreateQueryParams(method *protogen.Method) []*vars.QueryParam {
 				continue
 			}
 			queryParams = append(queryParams, &vars.QueryParam{
-				//Field:  field,
+				// Field:  field,
 				GoName: fmt.Sprintf("%s%s", parent.GoName, field.GoName),
 				Name:   fmt.Sprintf("%s%s", parent.Name, field.Desc.Name()),
 			})

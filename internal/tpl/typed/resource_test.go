@@ -17,21 +17,21 @@ func TestGenerateResourceFile(t *testing.T) {
 					GoImportPath: "git.hyperchain.cn/bfsdk/pb/corev1",
 					RootPath:     "corev1",
 				},
-				HttpRequestBody: vars.HttpRequestBody{
+				HTTPRequestBody: vars.HTTPRequestBody{
 					BodyName:   "name",
 					GoBodyName: "Name",
 				},
-				HttpResponseBody: vars.HttpResponseBody{
+				HTTPResponseBody: vars.HTTPResponseBody{
 					Name:         "HelloReply",
 					GoImportPath: "git.hyperchain.cn/bfsdk/pb/corev1",
 					RootPath:     "corev1",
 				},
 				IsSpecified: true,
-				//IsStreamClient:   true,
+				// IsStreamClient:   true,
 				ProtoServiceName: "Core",
 				FuncName:         "SayHello",
-				HttpMethod:       "post",
-				Url:              "/api/v1/credential/{id}",
+				HTTPMethod:       "post",
+				URL:              "/api/v1/credential/{id}",
 				PathParams: []*vars.PathParam{
 					{
 						Name:   "name",
@@ -41,7 +41,7 @@ func TestGenerateResourceFile(t *testing.T) {
 				QueryParams: nil,
 			},
 		},
-		IsWarpHttpResponse: true,
+		IsWarpHTTPResponse: true,
 		GoImportPaths:      []string{"github.com/jaronnie/autosdk/pb/corev1"},
 		ScopeVersion:       "corev1",
 		UpScopeVersion:     "Corev1",

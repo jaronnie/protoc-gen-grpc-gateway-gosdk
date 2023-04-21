@@ -1,7 +1,7 @@
 package tpl
 
 type ClientSetData struct {
-	GoModule      string            //github.com/jaronnie/autosdk
+	GoModule      string            // github.com/jaronnie/autosdk
 	RootModule    string            // bfsdk
 	ScopeVersions map[string]string // ["corev1":"CoreV1", "oauthv1":"OauthV1"]
 }
