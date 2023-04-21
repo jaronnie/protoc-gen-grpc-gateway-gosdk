@@ -1,0 +1,11 @@
+Name: user.rpc
+ListenOn: 0.0.0.0:8080
+Gateway:
+  Name: gateway
+  Port: 8081
+  Upstreams:
+    - Grpc:
+        Endpoints:
+          - localhost:8080
+      ProtoSets: 
+        - userpb/user.pb      
