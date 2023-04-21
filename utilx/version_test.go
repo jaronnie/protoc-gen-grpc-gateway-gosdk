@@ -24,7 +24,7 @@ func TestGetProtocGenGoVersion(t *testing.T) {
 }
 
 func TestGetProtocGenGRPCGatewayVersion(t *testing.T) {
-	s, err := getProtocGenGRPCGatewayVersion()
+	s, err := getProtocGenGRPCGatewayGoSdkVersion()
 	if err != nil {
 		fmt.Println(err)
 		return
