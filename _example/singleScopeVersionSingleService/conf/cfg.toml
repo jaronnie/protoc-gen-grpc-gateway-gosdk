@@ -1,5 +1,0 @@
-goVersion = "1.18"
-goModule = "github.com/jaronnie/autosdk"
-pluginOutputPath = "autosdk"
-scopeVersion = "corev1"
-gatewayPrefix = "/gateway/core"
