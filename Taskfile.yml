@@ -3,12 +3,12 @@ version: "3"
 tasks:
   debug:
     cmds:
-      - go build -o $GOBIN/protoc-gen-grpc-gateway-go cmd/protoc-gen-grpc-gateway-go/main.go 
+      - go build -o $GOBIN/protoc-gen-grpc-gateway-gosdk cmd/protoc-gen-grpc-gateway-gosdk/main.go 
   install:
     deps:
       - build
     cmds:
-      - cp dist/protoc-gen-grpc-gateway-go_{{OS}}_{{ARCH}}/protoc-gen-grpc-gateway-go $GOBIN
+      - cp dist/protoc-gen-grpc-gateway-gosdk_{{OS}}_{{ARCH}}/protoc-gen-grpc-gateway-gosdk $GOBIN
     silent: true
   fmt:
     cmds:

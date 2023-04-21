@@ -11,8 +11,8 @@ import (
 	"github.com/spf13/viper"
 	"google.golang.org/protobuf/compiler/protogen"
 
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/gen/codegenerator"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/gen/codegenerator"
 )
 
 var (

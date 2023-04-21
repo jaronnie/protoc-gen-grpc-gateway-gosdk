@@ -1,6 +1,6 @@
 package interfaces
 
-import "github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/vars"
+import "github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/vars"
 
 type Interface interface {
 	GenGoMod() error

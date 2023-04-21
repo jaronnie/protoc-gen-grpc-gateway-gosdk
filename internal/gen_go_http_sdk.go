@@ -5,11 +5,11 @@ import (
 	"github.com/pkg/errors"
 	"google.golang.org/protobuf/compiler/protogen"
 
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/env"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/gateway"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/gen"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/vars"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/utilx"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/env"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/gateway"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/gen"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/vars"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/utilx"
 )
 
 func Generate(plugin *protogen.Plugin) error {

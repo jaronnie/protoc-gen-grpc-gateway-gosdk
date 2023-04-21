@@ -3,7 +3,7 @@ package utilx
 import (
 	"strings"
 
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/utilx/execx"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/utilx/execx"
 )
 
 func getProtoToolsVersion(t string) (string, error) {
@@ -15,8 +15,8 @@ func getProtoToolsVersion(t string) (string, error) {
 		return getProtocVersion()
 	case "protoc-gen-go":
 		return getProtocGenGoVersion()
-	case "protoc-gen-grpc-gateway-go":
-		return getProtocGenGRPCGatewayVersion()
+	case "protoc-gen-grpc-gateway-gosdk":
+		return getProtocGenGRPCGatewayGoSdkVersion()
 	}
 	return "", nil
 }
@@ -45,8 +45,8 @@ func getProtocGenGoVersion() (string, error) {
 	return "", nil
 }
 
-func getProtocGenGRPCGatewayVersion() (string, error) {
-	version, err := execx.Run("protoc-gen-grpc-gateway-go version", "")
+func getProtocGenGRPCGatewayGoSdkVersion() (string, error) {
+	version, err := execx.Run("protoc-gen-grpc-gateway-gosdk version", "")
 	if err != nil {
 		return "", err
 	}

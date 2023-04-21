@@ -11,8 +11,8 @@ module.exports = {
     // 作为特例，默认语言可以使用 '/' 作为其路径。
     '/': {
       lang: 'zh-CN', // 将会被设置为 <html> 的 lang 属性
-      title: 'protoc-gen-grpc-gateway-go',
-      description: 'protoc-gen-grpc-gateway-go docs'
+      title: 'protoc-gen-grpc-gateway-gosdk',
+      description: 'protoc-gen-grpc-gateway-gosdk docs'
     },
   },
   plugins: [
@@ -20,7 +20,7 @@ module.exports = {
     '@vuepress/last-updated',
   ],
   themeConfig: {
-    docsRepo: 'https://github.com/jaronnie/protoc-gen-grpc-gateway-go',
+    docsRepo: 'https://github.com/jaronnie/protoc-gen-grpc-gateway-gosdk',
     docsBranch: 'main',
     docsDir: 'docs',
     editLinks: true, // 底部增加编辑此页
@@ -42,7 +42,7 @@ module.exports = {
         // 当前 locale 的 algolia docsearch 选项
         algolia: {},
         nav: [
-          { text: 'Github', link: 'https://github.com/jaronnie/protoc-gen-grpc-gateway-go' },
+          { text: 'Github', link: 'https://github.com/jaronnie/protoc-gen-grpc-gateway-gosdk' },
         ],
         sidebar: {
           '/guide/': [
@@ -50,7 +50,7 @@ module.exports = {
             title: '1. Introduction',
             collapsable: false,
             children: [
-              { title: '1.1 什么是 protoc-gen-grpc-gateway-go?', path: '/guide/introduction/what-is-protoc-gen-grpc-gateway-go' },
+              { title: '1.1 什么是 protoc-gen-grpc-gateway-gosdk?', path: '/guide/introduction/what-is-protoc-gen-grpc-gateway-gosdk' },
               { title: '1.2 它解决了什么问题?', path: '/guide/introduction/what-problems-can-be-solved' },
             ]
           },
@@ -58,7 +58,7 @@ module.exports = {
             title: '2. Quick start',
             collapsable: false,
             children: [
-              { title: '2.1 下载 protoc-gen-grpc-gateway-go', path: '/guide/quickstart/install' },
+              { title: '2.1 下载 protoc-gen-grpc-gateway-gosdk', path: '/guide/quickstart/install' },
             ]
           },
           ],

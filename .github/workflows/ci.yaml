@@ -1,4 +1,4 @@
-name: protoc-gen-grpc-gateway-go-golint
+name: protoc-gen-grpc-gateway-gosdk-golint
 
 on:
   push:

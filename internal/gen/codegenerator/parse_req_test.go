@@ -12,7 +12,7 @@ import (
 	"google.golang.org/protobuf/testing/protocmp"
 	"google.golang.org/protobuf/types/pluginpb"
 
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/gen/codegenerator"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/gen/codegenerator"
 )
 
 var parseReqTests = []struct {

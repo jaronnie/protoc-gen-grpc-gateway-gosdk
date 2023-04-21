@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/utilx"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/utilx"
 )
 
 func TestGenerateClientSetFile(t *testing.T) {

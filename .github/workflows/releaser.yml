@@ -1,4 +1,4 @@
-name: goreleaser-protoc-gen-grpc-gateway-go
+name: goreleaser-protoc-gen-grpc-gateway-gosdk
 
 on:
   push:

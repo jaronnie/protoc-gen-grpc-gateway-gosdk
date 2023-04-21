@@ -9,7 +9,7 @@ function generateFunc() {
     for dir in proto/*; do
       dir_name="${dir##*/}"
       if [ -d "$dir" ]; then
-          protoc --proto_path="$dir" --go_out="$(pwd)"/autosdk/pb --grpc-gateway-go_out=logtostderr=true,v=1,env_file=./conf/cfg.toml:"$(pwd)"/autosdk "$dir"/*.proto
+          protoc --proto_path="$dir" --go_out="$(pwd)"/autosdk/pb --grpc-gateway-gosdk_out=logtostderr=true,v=1,env_file=./conf/cfg.toml:"$(pwd)"/autosdk "$dir"/*.proto
       fi
     done
     sleep 1

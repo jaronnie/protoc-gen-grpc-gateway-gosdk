@@ -12,15 +12,15 @@ import (
 	"github.com/samber/lo"
 	"google.golang.org/protobuf/compiler/protogen"
 
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/env"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/gateway"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/tpl"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/tpl/fake"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/tpl/rest"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/tpl/typed"
-	typedfake "github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/tpl/typed/fake"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/vars"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/utilx"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/env"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/gateway"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/tpl"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/tpl/fake"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/tpl/rest"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/tpl/typed"
+	typedfake "github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/tpl/typed/fake"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/vars"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/utilx"
 )
 
 type HTTPSdk struct {

@@ -1,8 +1,8 @@
 package gateway
 
 import (
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/vars"
-	"github.com/jaronnie/protoc-gen-grpc-gateway-go/utilx"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/internal/vars"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-gosdk/utilx"
 )
 
 // GetAllScopeVersionsMap {"corev1":"CoreV1", "corev2":"CoreV2"}

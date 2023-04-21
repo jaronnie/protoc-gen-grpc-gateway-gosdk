@@ -13,7 +13,7 @@ builds:
       - linux
       - windows
       - darwin
-    main: ./cmd/protoc-gen-grpc-gateway-go
+    main: ./cmd/protoc-gen-grpc-gateway-gosdk
 archives:
   - replacements:
       darwin: Darwin
