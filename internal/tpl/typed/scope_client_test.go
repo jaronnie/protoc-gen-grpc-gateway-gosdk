@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/jaronnie/protoc-gen-go-httpsdk/utilx"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/utilx"
 )
 
 func TestGenerateScopeClientFile(t *testing.T) {

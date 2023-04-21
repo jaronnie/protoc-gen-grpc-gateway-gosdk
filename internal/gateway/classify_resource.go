@@ -7,8 +7,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/vars"
-	"github.com/jaronnie/protoc-gen-go-httpsdk/utilx"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/vars"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/utilx"
 )
 
 func ClassifyResource(scopeResourceGws vars.ScopeResourceGateway) error {

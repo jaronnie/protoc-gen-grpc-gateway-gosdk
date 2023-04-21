@@ -5,7 +5,7 @@ import (
 
 	"github.com/bmizerany/assert"
 
-	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/vars"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/vars"
 )
 
 func TestGetResourceByUri(t *testing.T) {

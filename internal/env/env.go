@@ -8,8 +8,8 @@ import (
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 
-	"github.com/jaronnie/protoc-gen-go-httpsdk/utilx"
-	"github.com/jaronnie/protoc-gen-go-httpsdk/utilx/execx"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/utilx"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/utilx/execx"
 )
 
 type PluginEnv struct {

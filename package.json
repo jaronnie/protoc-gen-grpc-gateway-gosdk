@@ -1,7 +1,7 @@
 {
-  "name": "protoc-gen-go-httpsdk-docs",
+  "name": "protoc-gen-grpc-gateway-go-docs",
   "version": "1.0.6",
-  "description": "protoc-gen-go-httpsdk-docs",
+  "description": "protoc-gen-grpc-gateway-go-docs",
   "author": "jaron@jaronnie.com",
   "main": "index.js",
   "keywords": [
@@ -10,10 +10,10 @@
     "plugin",
     "vuepress"
   ],
-  "homepage": "https://github.com/jaronnie/protoc-gen-go-httpsdk",
+  "homepage": "https://github.com/jaronnie/protoc-gen-grpc-gateway-go",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jaronnie/protoc-gen-go-httpsdk.git"
+    "url": "https://github.com/jaronnie/protoc-gen-grpc-gateway-go.git"
   },
   "license": "MIT",
   "scripts": {

@@ -10,9 +10,9 @@ import (
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/types/descriptorpb"
 
-	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/env"
-	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/parse"
-	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/vars"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/env"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/parse"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/vars"
 )
 
 func GetMethodGateway(m *protogen.Method, env *env.PluginEnv) (*vars.Gateway, error) {

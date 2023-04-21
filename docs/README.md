@@ -1,9 +1,9 @@
 ---
 home: true
-heroText: protoc-gen-go-httpsdk
+heroText: protoc-gen-grpc-gateway-go
 tagline: 基于 proto 以及 grpc-gateway 生成客户端 go sdk
 actionText: 开始 →
-actionLink: /guide/introduction/what-is-protoc-gen-go-httpsdk
+actionLink: /guide/introduction/what-is-protoc-gen-grpc-gateway-go
 heroImage: https://oss.jaronnie.com/logo.jpeg
 footer: MIT Licensed | Copyright © 2023 jaronnie
 ---

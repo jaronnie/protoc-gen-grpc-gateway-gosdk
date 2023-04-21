@@ -1,8 +1,7 @@
-name: protoc-gen-go-httpsdk-golint
+name: protoc-gen-grpc-gateway-go-golint
 
 on:
   push:
-    branches:
   pull_request:
 
 jobs:

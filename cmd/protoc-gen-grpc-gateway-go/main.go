@@ -11,8 +11,8 @@ import (
 	"github.com/spf13/viper"
 	"google.golang.org/protobuf/compiler/protogen"
 
-	"github.com/jaronnie/protoc-gen-go-httpsdk/internal"
-	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/gen/codegenerator"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/gen/codegenerator"
 )
 
 var (
@@ -24,12 +24,9 @@ var (
 	ScopeVersions      []string // scopeVersions used for clientSet
 	GatewayPrefix      string   // microservice gateway prefix
 	IsWarpHttpResponse bool     // is warped code, data, message
-	// IsResourceExpansionUpdate bool     // is to update resource expansion
-	PluginOutputPath string // plugin output path
-
-	SpecifiedMethods []string // specified rpc methods
-
-	Debug bool // used to debug
+	PluginOutputPath   string   // plugin output path
+	SpecifiedMethods   []string // specified rpc methods
+	Debug              bool     // used to debug
 )
 
 var (
@@ -101,11 +98,6 @@ func bindFlag() {
 		false,
 		"isWarpHttpResponse",
 	)
-	// pflag.BoolVar(&IsResourceExpansionUpdate,
-	// 	"isResourceExpansionUpdate",
-	// 	true,
-	// 	"isResourceExpansionUpdate",
-	// )
 	pflag.StringVar(&PluginOutputPath,
 		"pluginOutputPath",
 		".",

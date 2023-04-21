@@ -4,7 +4,7 @@ tools/
 
 dist/
 
-cmd/protoc-gen-go-httpsdk/protoc-gen-go-httpsdk
+cmd/protoc-gen-grpc-gateway-go/protoc-gen-grpc-gateway-go
 
 .history
 node_modules

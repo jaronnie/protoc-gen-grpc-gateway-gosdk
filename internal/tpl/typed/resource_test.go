@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/jaronnie/protoc-gen-go-httpsdk/internal/vars"
-	"github.com/jaronnie/protoc-gen-go-httpsdk/utilx"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/internal/vars"
+	"github.com/jaronnie/protoc-gen-grpc-gateway-go/utilx"
 )
 
 func TestGenerateResourceFile(t *testing.T) {
