@@ -10,6 +10,37 @@ According to the function of grpc gateway supported by grpc-gateway plugin
 
 to generate go http sdk similar to k8s.
 
+```shell
+$ tree modsdk
+modsdk
+├── clientset.go
+├── fake
+│   └── fake_clientset.go
+├── go.mod
+├── go.sum
+├── pb
+│   └── userpb
+│       └── user.pb.go
+├── rest
+│   ├── client.go
+│   ├── option.go
+│   └── request.go
+└── typed
+    ├── direct_client.go
+    ├── fake
+    │   └── fake_direct_client.go
+    └── userv1
+        ├── fake
+        │   ├── fake_user.go
+        │   ├── fake_user_expansion.go
+        │   └── fake_userv1_client.go
+        ├── user.go
+        ├── user_expansion.go
+        └── userv1_client.go
+
+8 directories, 16 files
+```
+
 ## install
 
 make sure you have already installed [task](https://github.com/go-task/task) and [goreleaser](https://github.com/goreleaser/goreleaser) tools first.
