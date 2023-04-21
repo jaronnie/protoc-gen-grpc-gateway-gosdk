@@ -24,3 +24,4 @@ then move it to $PATH
 # make sure install successfully
 protoc-gen-grpc-gateway-gosdk version
 ```
+
