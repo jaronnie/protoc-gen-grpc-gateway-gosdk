@@ -20,12 +20,10 @@ cd protoc-gen-grpc-gateway-gosdk
 task install
 ```
 
-## _example
+## examples
+
+### grpc-restful
 
 make sure you have already installed protoc and protoc-gen-go.
 
-```shell
-cd _example/singleScopeVersionSingleService
-make gensdk.debug.fmt
-cd ../..
-```
+![2023-04-22_01-10-03](https://oss.jaronnie.com/2023-04-22_01-10-03.gif)
