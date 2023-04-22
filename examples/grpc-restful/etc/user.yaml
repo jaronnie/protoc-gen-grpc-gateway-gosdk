@@ -1,11 +1,13 @@
 Name: user.rpc
 ListenOn: 0.0.0.0:8080
+Timeout: 300000000
 Gateway:
   Name: gateway
   Port: 8081
   Upstreams:
     - Grpc:
         Endpoints:
-          - localhost:8080
-      ProtoSets: 
+          - 0.0.0.0:8080
+      Name: rpc-server
+      ProtoSets:
         - userpb/user.pb      

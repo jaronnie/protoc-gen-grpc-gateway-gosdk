@@ -1,0 +1,3 @@
+scopeVersions: [av1, bv1]
+goModule: github.com/jaronnie/autosdk
+goVersion: 1.18

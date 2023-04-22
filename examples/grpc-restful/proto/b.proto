@@ -1,0 +1,22 @@
+syntax = "proto3";
+option go_package = "./bpb";
+package b;
+
+import "google/api/annotations.proto";
+
+message AddUserReq {
+      string name = 1;
+      int32 age = 2;
+}
+
+message AddUserResp {
+      int32 id = 1;
+}
+
+service b {
+      rpc Add(AddUserReq) returns (AddUserResp) {
+            option (google.api.http) = {
+                  get: "/api/v1.0/user/add"
+            };
+      };
+}

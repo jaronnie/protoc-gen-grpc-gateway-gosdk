@@ -16,7 +16,8 @@ message AddUserResp {
 service user {
       rpc Add(AddUserReq) returns (AddUserResp) {
             option (google.api.http) = {
-                  get: "/api/v1.0/user/add"
+                  post: "/api/v1.0/user/add"
+                  body: "*"
             };
       };
 }

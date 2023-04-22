@@ -41,6 +41,6 @@ func main() {
 	group.Add(gw)
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
-	fmt.Printf("Starting rpc server at %s:%d...\n", c.Gateway.Host, c.Gateway.Port)
+	fmt.Printf("Starting gateway server at %s:%d...\n", c.Gateway.Host, c.Gateway.Port)
 	group.Start()
 }

@@ -26,5 +26,5 @@ func NewAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddLogic {
 func (l *AddLogic) Add(in *userpb.AddUserReq) (*userpb.AddUserResp, error) {
 	// todo: add your logic here and delete this line
 
-	return &userpb.AddUserResp{}, nil
+	return &userpb.AddUserResp{Id: 1}, nil
 }
