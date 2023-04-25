@@ -368,7 +368,11 @@ func (r Result) Into(obj interface{}, isWarpHttpResponse bool) error {
 
 	switch obj.(type) {
 	case proto.Message:
-		err = protojson.Unmarshal([]byte(marshalJSON), obj.(proto.Message))
+		parser := protojson.UnmarshalOptions{
+			DiscardUnknown: true,
+		}
+
+		err = parser.Unmarshal([]byte(marshalJSON), obj.(proto.Message))
 	default:
 		err = json.Unmarshal(marshalJSON, &obj)
 	}
