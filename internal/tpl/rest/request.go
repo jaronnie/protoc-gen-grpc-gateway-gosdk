@@ -17,6 +17,7 @@ import (
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
+	"net/url"
 	"reflect"
 	"strings"
 	"time"
@@ -94,10 +95,11 @@ func (r *Request) Params(args ...QueryParam) *Request {
 		if cast.ToString(v.Value) == "" {
 			continue
 		}
+		va := url.QueryEscape(cast.ToString(v.Value))
 		if i == len(args) - 1 {
-			queryParams += fmt.Sprintf("%s=%s", v.Name, cast.ToString(v.Value))
+			queryParams += fmt.Sprintf("%s=%s", v.Name, va)
 		} else {
-			queryParams += fmt.Sprintf("%s=%s&", v.Name, cast.ToString(v.Value))
+			queryParams += fmt.Sprintf("%s=%s&", v.Name, va)
 		}
 	}
 	r.params = queryParams
