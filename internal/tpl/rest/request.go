@@ -69,7 +69,17 @@ type PathParam struct {
 // e.g. /api/v1/credential/init
 func (r *Request) SubPath(subPath string, args ...PathParam) *Request {
 	for _, v := range args {
-		subPath = strings.ReplaceAll(subPath, "{"+v.Name+"}", cast.ToString(v.Value))
+		val := reflect.ValueOf(v.Value)
+		kind := val.Kind()
+		if (kind == reflect.Slice || kind == reflect.Array) {
+			js, err := json.Marshal(v.Value)
+			if err != nil {
+				panic(err)
+			}
+			subPath = strings.ReplaceAll(subPath, "{"+v.Name+"}", cast.ToString(js[1:len(js)-1]))
+		} else {
+			subPath = strings.ReplaceAll(subPath, "{"+v.Name+"}", cast.ToString(v.Value))
+		}
 	}
 	r.subPath = r.c.gatewayPrefix + subPath
 
@@ -90,19 +100,38 @@ func (r *Request) Params(args ...QueryParam) *Request {
 	if len(args) == 0 {
 		return r
 	}
-	queryParams := "?"
+	var queryParams strings.Builder
+	queryParams.WriteString("?")
 	for i, v := range args {
-		if cast.ToString(v.Value) == "" {
-			continue
-		}
-		va := url.QueryEscape(cast.ToString(v.Value))
-		if i == len(args) - 1 {
-			queryParams += fmt.Sprintf("%s=%s", v.Name, va)
+		val := reflect.ValueOf(v.Value)
+		kind := val.Kind()
+		if kind == reflect.Slice || kind == reflect.Array {
+			length := val.Len()
+			for j := 0; j < length; j++ {
+				value := val.Index(j).Interface()
+				if cast.ToString(value) == "" {
+					continue
+				}
+				va := url.QueryEscape(cast.ToString(value))
+				if i == len(args)-1 && j == length-1 {
+					queryParams.WriteString(fmt.Sprintf("%s=%s", v.Name, va))
+				} else {
+					queryParams.WriteString(fmt.Sprintf("%s=%s&", v.Name, va))
+				}
+			}
 		} else {
-			queryParams += fmt.Sprintf("%s=%s&", v.Name, va)
+			if cast.ToString(v.Value) == "" {
+				continue
+			}
+			va := url.QueryEscape(cast.ToString(v.Value))
+			if i == len(args)-1 {
+				queryParams.WriteString(fmt.Sprintf("%s=%s", v.Name, va))
+			} else {
+				queryParams.WriteString(fmt.Sprintf("%s=%s&", v.Name, va))
+			}
 		}
 	}
-	r.params = queryParams
+	r.params = queryParams.String()
 	return r
 }
 
